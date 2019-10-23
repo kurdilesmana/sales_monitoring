@@ -1,0 +1,9 @@
+Langkah Pembuatan Modul
+1. Buat table database di file initial_database.sql
+2. Eksekusi di phpmyadmin.
+3. Buat Folder Modul (models, views, controllers).
+4. Ketika modul diakses.
+Controllers -> function index()
+index() -> load layout yang ada di folder views file index.php dan index_js.php.
+index_js.php dia ke database untuk ngambil data di function view().
+5. Daftarkan modul di sidebar menu (shared/views/layout/sidebar_menu.php)
