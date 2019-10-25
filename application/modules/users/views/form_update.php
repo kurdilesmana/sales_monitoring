@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md">
+  <div class="col-md-12">
     <div class="box box-info">
       <div class="box-header with-border">
         <i class="fa fa-user"></i>
@@ -31,12 +31,12 @@
                 </div>
                 <span class="help-block"><?php echo form_error('name'); ?></span>
               </div>
-              <div class="form-group <?= form_error('username') ? 'has-error' : '' ?>">
-                <label for="username" class="col-sm-3 control-label">Username</label>
+              <div class="form-group <?= form_error('email') ? 'has-error' : '' ?>">
+                <label for="email" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control" name="username" placeholder="Username" value="<?php echo isset($lists)?$lists['username']:set_value('username'); ?>">
+                  <input type="email" class="form-control" name="email" placeholder="email" value="<?php echo isset($lists)?$lists['email']:set_value('email'); ?>">
                 </div>
-                <span class="help-block"><?php echo form_error('username'); ?></span>
+                <span class="help-block"><?php echo form_error('email'); ?></span>
               </div>
               <div class="form-group">
                 <label for="role" class="col-sm-3 control-label">Role</label>

@@ -8,11 +8,11 @@ class Users extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->sharedModel('LoginModel');
+		$this->load->sharedModel('AuthModel');
 		$this->load->sharedModel('UserModel');
 
-		if (!$this->LoginModel->logged_id()) {
-			redirect(base_url() . 'login');
+		if (!$this->AuthModel->logged_id()) {
+			redirect(base_url() . 'auth');
 		}
 	}
 
@@ -23,7 +23,7 @@ class Users extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/index_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -35,8 +35,8 @@ class Users extends MY_Controller
 		if ($_POST) {
 			//set form validation
 			$this->form_validation->set_rules('name', 'Nama', 'required');
-			$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]');
-			$this->form_validation->set_rules('role', 'Role', 'required');
+			$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+			$this->form_validation->set_rules('role_id', 'Role', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[5]');
 			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'trim|required|matches[password]');
 
@@ -50,9 +50,9 @@ class Users extends MY_Controller
 				//get data dari FORM
 				$data = [
 					'name' => htmlspecialchars($this->input->post("name", TRUE)),
-					'username' => htmlspecialchars($this->input->post("username", TRUE)),
-					'password' => $this->input->post('password'),
-					'role' => $this->input->post('role', TRUE),
+					'email' => htmlspecialchars($this->input->post("email", TRUE)),
+					'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+					'role_id' => $this->input->post('role_id', TRUE),
 				];
 
 				//insert data via model
@@ -60,7 +60,7 @@ class Users extends MY_Controller
 
 				//Pengecekan input data user
 				if ($doInsert == 'exist') {
-					$tdata['error'] = 'Username sudah terdaftar!';
+					$tdata['error'] = 'Email sudah terdaftar!';
 				} elseif ($doInsert == 'failed') {
 					$tdata['error'] = 'Data tidak bisa ditambahkan!';
 				} else {
@@ -72,7 +72,7 @@ class Users extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form_add', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_form', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -87,12 +87,13 @@ class Users extends MY_Controller
 		if ($_POST) {
 			//set form validation
 			$this->form_validation->set_rules('name', 'Nama', 'trim|required');
-			$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 			$this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]');
 			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'trim|matches[password]');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi!');
+			$this->form_validation->set_message('valid_email', '{field} tidak valid!');
 			$this->form_validation->set_message('min_length', '{field} terlalu pendek!.');
 			$this->form_validation->set_message('matches', '{field} tidak sama!.');
 
@@ -101,22 +102,22 @@ class Users extends MY_Controller
 				//get data dari FORM
 				$id = $this->input->post("id", TRUE);
 				$name = $this->input->post("name", TRUE);
-				$username = $this->input->post("username", TRUE);
+				$email = $this->input->post("email", TRUE);
 				$password = $this->input->post("password", TRUE);
-				$role = $this->input->post('role', TRUE);
+				$role_id = $this->input->post('role_id', TRUE);
 
 				//insert data via model
 				$doUpdate = $this->UserModel->updateData(array(
 					'id' => $id,
 					'name' => $name,
-					'username' => $username,
+					'email' => $email,
 					'password' => $password,
-					'role' => $role,
+					'role_id' => $role_id,
 				));
 
 				//Pengecekan input data user
 				if ($doUpdate == 'exist') {
-					$tdata['error'] = 'Username sudah terdaftar!';
+					$tdata['error'] = 'Email sudah terdaftar!';
 				} else {
 					$this->session->set_flashdata('success', 'Berhasil diubah');
 					redirect(base_url() . 'users');
@@ -127,15 +128,15 @@ class Users extends MY_Controller
 		## GET USER ##
 		$userData = $this->UserModel->getById($id);
 		$tdata['lists'] = array(
-			'id' => $userData->id_user,
+			'id' => $userData->id,
 			'name' => $userData->name,
-			'username' => $userData->username,
-			'role' => $userData->role
+			'email' => $userData->email,
+			'role_id' => $userData->role_id
 		);
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form_update', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_form', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -153,7 +154,7 @@ class Users extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/index_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -176,6 +177,16 @@ class Users extends MY_Controller
 		);
 		header('Content-Type: application/json');
 		echo json_encode($callback); // Convert array $callback ke json
+	}
+
+	function profile()
+	{
+		$tdata['title'] = 'My Profile';
+		$tdata['caption'] = 'User Profile';
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/user_profile', $tdata, true);
+		$this->load->sharedView('base', $ldata);
 	}
 
 	function searchRole()

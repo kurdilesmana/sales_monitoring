@@ -3,6 +3,8 @@ class MenuModel extends CI_Model
 {
   private $_table = "user_header_menu";
   private $_tableSub = "user_menu";
+  private $_tableAccess = "user_access_menu";
+  private $_tableRole = "user_role";
   
   function __construct()
   {
@@ -17,6 +19,20 @@ class MenuModel extends CI_Model
     return $this->db->get($this->_table)->result_array(); // Eksekusi query sql sesuai kondisi diatas
   }
 
+  public function getById($id)
+  {
+    return $this->db->get_where($this->_table, ["id" => $id])->row();
+  }
+  
+  public function count_all(){
+    return $this->db->count_all($this->_table); // Untuk menghitung semua data users
+  }
+  
+  public function count_filter($search){
+    $this->db->like('header_menu', $search); // Untuk menambahkan query where LIKE
+    return $this->db->get($this->_table)->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
+  }
+  
   public function filter_sub($search, $limit, $start, $order_field, $order_ascdesc)
   {
     $this->db->like('title', $search); // Untuk menambahkan query where LIKE
@@ -25,27 +41,13 @@ class MenuModel extends CI_Model
     return $this->db->get($this->_tableSub)->result_array(); // Eksekusi query sql sesuai kondisi diatas
   }
 
-  public function getById($id)
-  {
-    return $this->db->get_where($this->_table, ["id" => $id])->row();
-  }
-
   public function getByIdSub($id)
   {
     return $this->db->get_where($this->_tableSub, ["id" => $id])->row();
   }
-
-  public function count_all(){
-    return $this->db->count_all($this->_table); // Untuk menghitung semua data users
-  }
-
+  
   public function count_all_sub(){
     return $this->db->count_all($this->_tableSub); // Untuk menghitung semua data users
-  }
-
-  public function count_filter($search){
-    $this->db->like('header_menu', $search); // Untuk menambahkan query where LIKE
-    return $this->db->get($this->_table)->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
   }
 
   public function count_filter_sub($search){
@@ -53,9 +55,37 @@ class MenuModel extends CI_Model
     return $this->db->get($this->_tableSub)->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
   }
 
+  public function filter_access($search, $limit, $start, $order_field, $order_ascdesc)
+  {
+    $q = $this->db->query("
+      SELECT a.id, b.title, c.name 
+      FROM ".$this->_tableAccess." a
+      INNER JOIN ".$this->_tableSub." b ON b.id = a.menu_id
+      INNER JOIN ".$this->_tableRole." c ON c.id = a.role_id
+      WHERE b.title LIKE '%".$search."%'
+      ORDER BY ".$order_field." ".$order_ascdesc."
+      LIMIT ".$start.",".$limit."
+    ");
+    $result = $q->result_array();
+    return $result;
+  }
+  
+  public function getByIdAccess($id)
+  {
+    return $this->db->get_where($this->_tableAccess, ["id" => $id])->row();
+  }
+  
+  public function count_all_access(){
+    return $this->db->count_all($this->_tableAccess); // Untuk menghitung semua data users
+  }
+
+  public function count_filter_access($search){
+    $this->db->like('menu_id', $search); // Untuk menambahkan query where LIKE
+    return $this->db->get($this->_tableAccess)->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
+  }
+
   public function entriData($data=array())
   {
-    $header_menu    = $data["header_menu"];
     $addMenu  = $this->db->insert($this->_table, $data);
     if (!$addMenu) {
       return 'failed';
@@ -71,8 +101,6 @@ class MenuModel extends CI_Model
     $username = $data["username"];
     $password = $data["password"];
     $role     = $data["role"];
-
-    $thisUserPass = $this->__getUserPassword(array('id' => $id));
 
     $oldPass   = $thisUserPass['password'];
     $oldUserid = $thisUserPass['username'];
@@ -105,40 +133,23 @@ class MenuModel extends CI_Model
     }
   }
 
-  private function __checkUserId($username){    
-    $q = $this->db->query("
-      SELECT
-        id_user
-        ,username
-      FROM
-        ".$this->_table."
-      WHERE
-        username = '".$this->db->escape_str($username)."'
-    ");
-    $result = $q->num_rows();
-    return $result;
+  public function entriDataSub($data=array())
+  {
+    $addSubMenu  = $this->db->insert($this->_tableSub, $data);
+    if (!$addSubMenu) {
+      return 'failed';
+    } else {
+      return 'success';
+    }
   }
 
-  private function __getUserPassword($params = array()){
-    $id     = isset($params["id"])?$params["id"]:'';
-    $username = isset($params["username"])?$params["username"]:'';
-    $conditional = "";
-    
-    if($id != '') $conditional = "WHERE id_user = '".$id."'";
-    if($username != '') $conditional = "WHERE username = '".$this->db->escape_str($username)."'";
-    
-    $q = $this->db->query("
-      SELECT
-        id_user
-        ,username
-        ,password
-        ,role
-      FROM
-        ".$this->_table."
-      ".$conditional."
-    ");
-    $result = $q->first_row('array');
-    return $result;
+  public function entriDataAccess($data=array())
+  {
+    $addAccessMenu  = $this->db->insert($this->_tableAccess, $data);
+    if (!$addAccessMenu) {
+      return 'failed';
+    } else {
+      return 'success';
+    }
   }
-  
 }

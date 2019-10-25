@@ -6,7 +6,7 @@
       ajax: {
         dataType: 'json',
         url: '<?php echo base_url('menu/searchMenu'); ?>',
-        delay: 800,
+        delay: 250,
         data: function(params) {
 	          return {
 	            q : params.term

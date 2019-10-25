@@ -22,12 +22,20 @@
             </div>
             <span class="help-block"><?php echo form_error('name'); ?></span>
           </div>
-          <div class="form-group <?= form_error('username') ? 'has-error' : '' ?>">
-            <label for="username" class="col-sm-3 control-label">Username</label>
+          <div class="form-group <?= form_error('email') ? 'has-error' : '' ?>">
+            <label for="email" class="col-sm-3 control-label">Email</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="username" placeholder="Username" value="<?php echo set_value('username'); ?>">
+              <input type="email" class="form-control" name="email" placeholder="Email" value="<?php echo set_value('email'); ?>">
             </div>
-            <span class="help-block"><?php echo form_error('username'); ?></span>
+            <span class="help-block"><?php echo form_error('email'); ?></span>
+          </div>
+          <div class="form-group <?= form_error('brand_id') ? 'has-error' : '' ?>">
+            <label for="brand_id" class="col-sm-3 control-label">Brand</label>
+            <div class="col-sm-6">
+              <select id="selectBrand" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              </select>
+            </div>
+            <span class="help-block"><?php echo form_error('brand_id'); ?></span>
           </div>
           <div class="form-group <?= form_error('password') ? 'has-error' : '' ?>">
             <label for="password" class="col-sm-3 control-label">Password</label>
@@ -43,13 +51,13 @@
             </div>
             <span class="help-block"><?php echo form_error('passconf'); ?></span>
           </div>
-          <div class="form-group <?= form_error('passconf') ? 'has-error' : '' ?>">
-            <label for="role" class="col-sm-3 control-label">Role</label>
+          <div class="form-group <?= form_error('role_id') ? 'has-error' : '' ?>">
+            <label for="role_id" class="col-sm-3 control-label">Role</label>
             <div class="col-sm-6">
-              <select id="select2" class="form-control select2 select2-hidden-accessible" name="role" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              <select id="selectRole" class="form-control select2 select2-hidden-accessible" name="role_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
               </select>
             </div>
-            <span class="help-block"><?php echo form_error('role'); ?></span>
+            <span class="help-block"><?php echo form_error('role_id'); ?></span>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-3 control-label"></label>
