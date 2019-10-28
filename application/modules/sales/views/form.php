@@ -18,7 +18,12 @@
           <div class="form-group <?= form_error('tgl_input') ? 'has-error' : '' ?>">
             <label for="tgl_input" class="col-sm-3 control-label">Tanggal</label>
             <div class="col-sm-6">
-              <input type="date" class="form-control" name="tgl_input" placeholder="Tanggal" value="<?php echo isset($lists) ? $lists->tgl_input : set_value('tgl_input'); ?>">
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" id="tgl_input" name="tgl_input">
+              </div>
             </div>
             <span class="help-block"><?php echo form_error('tgl_input'); ?></span>
           </div>
@@ -30,12 +35,20 @@
             </div>
             <span class="help-block"><?php echo form_error('brand_id'); ?></span>
           </div>
-          <div class="form-group <?= form_error('brands_name') ? 'has-error' : '' ?>">
-            <label for="brands_name" class="col-sm-3 control-label">Nama Brands</label>
+          <div class="form-group <?= form_error('area_id') ? 'has-error' : '' ?>">
+            <label for="area_id" class="col-sm-3 control-label">Area</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="brands_name" placeholder="Nama Brands" value="<?php echo isset($lists) ? $lists->brands_name : set_value('brands_name'); ?>">
+              <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              </select>
             </div>
-            <span class="help-block"><?php echo form_error('brands_name'); ?></span>
+            <span class="help-block"><?php echo form_error('area_id'); ?></span>
+          </div>
+          <div class="form-group <?= form_error('omset') ? 'has-error' : '' ?>">
+            <label for="omset" class="col-sm-3 control-label">Omset</label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" name="omset" placeholder="Nama Brands" value="<?php echo isset($lists) ? $lists->omset : set_value('omset'); ?>">
+            </div>
+            <span class="help-block"><?php echo form_error('omset'); ?></span>
           </div>
           <div class="form-group <?= form_error('description') ? 'has-error' : '' ?>">
             <label for="description" class="col-sm-3 control-label">Deskripsi</label>

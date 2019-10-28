@@ -9,7 +9,7 @@ class Sales extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->sharedModel('AuthModel');
-		$this->load->sharedModel('BrandsModel');
+		$this->load->sharedModel('SalesModel');
 
 		if (!$this->AuthModel->logged_id()) {
 			redirect(base_url() . 'auth');
@@ -35,8 +35,9 @@ class Sales extends MY_Controller
 
 		if ($_POST) {
 			//set form validation
-			// $this->form_validation->set_rules('brands_code', 'Kode brands', 'required');
-			$this->form_validation->set_rules('brands_name', 'Nama Brands', 'required|max_length[25]');
+			$this->form_validation->set_rules('tgl_input', 'Tanggal Input', 'required');
+			$this->form_validation->set_rules('brands', 'Brands', 'required');
+			$this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[50]');
 			$this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[50]');
 
 			//set message form validation

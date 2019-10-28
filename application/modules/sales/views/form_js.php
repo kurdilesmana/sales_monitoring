@@ -54,5 +54,8 @@
 				},
 			}
 		});
+		$('#tgl_input').datepicker({
+			autoclose: true
+		});
 	});
 </script>
