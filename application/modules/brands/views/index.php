@@ -29,5 +29,28 @@
           </div>
           <!-- /.box -->
         </div>
+        <div class="modal fade" id="modalHapus">
+          <div class="modal-dialog">
+            <form action="<?php echo base_url('brands/delete') ?>" method="post" accept-charset="utf-8">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Yakin menghapus data ini?!</h4>
+                  <input type="text" name="id_brands" id="id_brands" value="" hidden>
+                </div>
+                <!-- <div class="modal-body"></p>
+                </div> -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-danger">Hapus!</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </form>
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
         <!-- /.col -->
       </div>

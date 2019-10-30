@@ -3,53 +3,68 @@
     <div class="box box-info">
       <div class="box-header with-border">
         <i class="fa fa-user"></i>
-        <h3 class="box-title"><?php echo $caption ?></h3> 
+        <h3 class="box-title"><?php echo $caption ?></h3>
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url().'brands/update?id='.$lists['id_brands']; ?>" method="post">
+      <form class="form-horizontal" action="<?php echo base_url() . 'sales/update?id=' . $lists['id_sales']; ?>" method="post">
         <div class="box-body">
-          <?php if(isset($error)) { ?>
-          <div class="alert alert-danger alert-dismissible" style="margin-top: 3px">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <div class="header"><b><i class="fa fa-exclamation-circle"></i> ERROR</b> <?php echo($error); ?></div>
-          </div>
+          <?php if (isset($error)) { ?>
+            <div class="alert alert-danger alert-dismissible" style="margin-top: 3px">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <div class="header"><b><i class="fa fa-exclamation-circle"></i> ERROR</b> <?php echo ($error); ?></div>
+            </div>
           <?php } ?>
-           <div class="form-group <?= form_error('id_brands') ? 'has-error' : '' ?>"hidden>
-            <label for="id_brands" class="col-sm-3 control-label">id brands</label>
+          <div class="form-group <?= form_error('id_sales') ? 'has-error' : '' ?>" hidden>
+            <label for="id_sales" class="col-sm-3 control-label">id sales</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="id_brands" placeholder="Id Brands" value="<?php echo isset($lists)?$lists['id_brands']:set_value('id_brands'); ?>">
+              <input type="text" class="form-control" name="id_sales" placeholder="Id sales" value="<?php echo isset($lists) ? $lists['id_sales'] : set_value('id_sales'); ?>">
             </div>
-            <span class="help-block"><?php echo form_error('id_brands'); ?></span>
+            <span class="help-block"><?php echo form_error('id_sales'); ?></span>
           </div>
-          <div class="form-group <?= form_error('brands_code') ? 'has-error' : '' ?>">
-            <label for="brands_code" class="col-sm-3 control-label">Kode Brands</label>
+          <div class="form-group <?= form_error('tgl_input') ? 'has-error' : '' ?>">
+            <label for="tgl_input" class="col-sm-3 control-label">Tanggal</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="brands_code" placeholder="Kode Brands" value="<?php echo isset($lists)?$lists['brands_code']:set_value('brands_code'); ?>">
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" id="tgl_input" name="tgl_input" value="<?php echo isset($lists) ? $lists['tgl_input'] : set_value('tgl_input'); ?>">
+              </div>
             </div>
-            <span class="help-block"><?php echo form_error('brands_code'); ?></span>
+            <span class="help-block"><?php echo form_error('tgl_input'); ?></span>
           </div>
-          <div class="form-group <?= form_error('brands_name') ? 'has-error' : '' ?>">
-            <label for="brands_name" class="col-sm-3 control-label">Nama Brands</label>
+          <div class="form-group <?= form_error('brand_id') ? 'has-error' : '' ?>">
+            <label for="brand_id" class="col-sm-3 control-label">Brand</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="brands_name" placeholder="Nama Brands" value="<?php echo isset($lists)?$lists['brands_name']:set_value('brands_name'); ?>">
-            </div>
-            <span class="help-block"><?php echo form_error('brands_name'); ?></span>
-          </div>
-          <div class="form-group <?= form_error('description') ? 'has-error' : '' ?>">
-            <label for="description" class="col-sm-3 control-label">Deskripsi</label>
-            <div class="col-sm-6">
-              <input type="description" class="form-control" name="description" placeholder="Deskripsi" value="<?php echo isset($lists)?$lists['description']:set_value('description'); ?>">
-            </div>
-            <span class="help-block"><?php echo form_error('description'); ?></span>
-          </div>
-           <div class="form-group">
-            <label for="status" class="col-sm-3 control-label">Status</label>
-            <div class="col-sm-6">
-              <select id="select2" class="form-control select2 select2-hidden-accessible" name="status" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
               </select>
             </div>
+            <span class="help-block"><?php echo form_error('brand_id'); ?></span>
           </div>
+          <div class="form-group <?= form_error('area_id') ? 'has-error' : '' ?>">
+            <label for="area_id" class="col-sm-3 control-label">Area</label>
+            <div class="col-sm-6">
+              <select id="selectArea" class="form-control select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              </select>
+            </div>
+            <span class="help-block"><?php echo form_error('area_id'); ?></span>
+          </div>
+          <div class="form-group <?= form_error('omset') ? 'has-error' : '' ?>">
+            <label for="omset" class="col-sm-3 control-label">Omset</label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" name="omset" placeholder="Omset" value="<?php echo isset($lists) ? $lists['omset'] : set_value('omset'); ?>">
+            </div>
+            <span class="help-block"><?php echo form_error('omset'); ?></span>
+          </div>
+          <div class="form-group <?= form_error('quantity') ? 'has-error' : '' ?>">
+            <label for="quantity" class="col-sm-3 control-label">Quantity</label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" name="quantity" placeholder="quantity" value="<?php echo isset($lists) ? $lists['quantity'] : set_value('quantity'); ?>">
+            </div>
+            <span class="help-block"><?php echo form_error('quantity'); ?></span>
+          </div>
+
           <div class="form-group">
             <label for="Simpan" class="col-sm-3 control-label"></label>
             <div class="col-sm-6">

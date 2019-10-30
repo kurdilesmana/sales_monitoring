@@ -23,21 +23,19 @@ class Area extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/index_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 
 		$this->load->sharedView('base', $ldata);
 	}
 
 	function add()
 	{
-		$tdata['title'] = 'Brands';
-		$tdata['caption'] = 'Tambah Brands';
+		$tdata['title'] = 'Area';
+		$tdata['caption'] = 'Tambah Area';
 
 		if ($_POST) {
 			//set form validation
-			// $this->form_validation->set_rules('brands_code', 'Kode brands', 'required');
-			$this->form_validation->set_rules('brands_name', 'Nama Brands', 'required|max_length[25]');
-			$this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[50]');
+			$this->form_validation->set_rules('area_name', 'Nama Area', 'required|max_length[25]');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi.');
@@ -46,50 +44,39 @@ class Area extends MY_Controller
 			//cek validasi
 			if ($this->form_validation->run() == TRUE) {
 				//get data dari FORM
-				$brands_code = $this->input->post('brands_code', TRUE);
-				$brands_name = $this->input->post('brands_name', TRUE);
-				$description = $this->input->post('description', TRUE);
-				$status = $this->input->post('status', TRUE);
+				$area_name = $this->input->post('area_name', TRUE);
 
 				//insert data via model
 				$doInsert = $this->AreaModel->entriData(array(
-					'brands_code' => $brands_code,
-					'brands_name' => $brands_name,
-					'description' => $description,
-					'status' => $status,
+					'name' => $area_name
 				));
 
-				//Pengecekan input data brands
-				if ($doInsert == 'exist') {
-					$tdata['error'] = 'Username sudah terdaftar!';
-				} elseif ($doInsert == 'failed') {
+				//Pengecekan input data
+				if ($doInsert == 'failed') {
 					$tdata['error'] = 'Data tidak bisa ditambahkan!';
 				} else {
 					$this->session->set_flashdata('success', 'Berhasil disimpan');
-					redirect(base_url() . 'brands');
+					redirect(base_url() . 'area');
 				}
 			}
 		}
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
 	function update()
 	{
-		$tdata['title'] = 'Brands';
-		$tdata['caption'] = 'Ubah Brands';
+		$tdata['title'] = 'Area';
+		$tdata['caption'] = 'Ubah Area';
 
 		$id = intval($_GET['id']);
-		if (!isset($id)) redirect(base_url() . 'brands');
+		if (!isset($id)) redirect(base_url() . 'Area');
 
 		if ($_POST) {
 			//set form validation
-			$this->form_validation->set_rules('brands_code', 'Kode brands', 'required');
-			$this->form_validation->set_rules('brands_name', 'Nama Brands', 'trim|required|max_length[25]');
-			$this->form_validation->set_rules('description', 'Deskripsi', 'trim|required|max_length[50]');
+			$this->form_validation->set_rules('area_name', 'Nama Area', 'trim|required|max_length[25]');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi.');
@@ -98,19 +85,13 @@ class Area extends MY_Controller
 			//cek validasi
 			if ($this->form_validation->run() == TRUE) {
 				//get data dari FORM
-				$id_brands = $this->input->post("id_brands", TRUE);
-				$brands_code = $this->input->post("brands_code", TRUE);
-				$brands_name = $this->input->post("brands_name", TRUE);
-				$description = MD5($this->input->post('description', TRUE));
-				$status = $this->input->post('status', TRUE);
+				$id_area = $this->input->post("id_area", TRUE);
+				$area_name = $this->input->post("area_name", TRUE);
 
 				//insert data via model
 				$doUpdate = $this->AreaModel->updateData(array(
-					'id_brands' => $id_brands,
-					'brands_code' => $brands_code,
-					'brands_name' => $brands_name,
-					'description' => $description,
-					'status' => $status,
+					'id_area' => $id_area,
+					'area_name' => $area_name,
 				));
 
 				//Pengecekan input data user
@@ -118,23 +99,38 @@ class Area extends MY_Controller
 					$tdata['error'] = 'Data tidak bisa ditambahkan!';
 				} else {
 					$this->session->set_flashdata('success', 'Berhasil disimpan');
-					redirect(base_url() . 'brands');
+					redirect(base_url() . 'area');
 				}
 			}
 		}
 
 		## GET USER ##
-		$brandsData = $this->AreaModel->getById($id);
+		$areaData = $this->AreaModel->getById($id);
 		$tdata['lists'] = array(
-			'id_brands' => $brandsData->id_brands,
-			'brands_code' => $brandsData->brands_code,
-			'brands_name' => $brandsData->brands_name,
-			'description' => $brandsData->description,
-			'status' => $brandsData->status
+			'id_area' => $areaData->id,
+			'area_name' => $areaData->name
 		);
+
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form_update', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function delete()
+	{
+		$id_area = $this->input->post("id_area", TRUE);
+		$doDelete = $this->AreaModel->deleteData($id_area);
+
+		if ($doDelete == 'failed') {
+			$tdata['error'] = 'Data gagal dihapus!';
+		} else {
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect(base_url() . 'area');
+		}
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -158,7 +154,7 @@ class Area extends MY_Controller
 		header('Content-Type: application/json');
 		echo json_encode($callback); // Convert array $callback ke json
 	}
-	function searchBrands()
+	function searchArea()
 	{
 		$json = [];
 		$q = $this->input->get("q");
@@ -166,7 +162,7 @@ class Area extends MY_Controller
 		if (!empty($q) or !empty($id)) {
 			$this->db->like('id', $q);
 			$this->db->or_like('name', $q);
-			$query = $this->db->select('id, name as text')->limit(10)->get("brands");
+			$query = $this->db->select('id, name as text')->limit(10)->get("area");
 			$json = $query->result();
 		}
 		echo json_encode($json);

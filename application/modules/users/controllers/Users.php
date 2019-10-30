@@ -184,8 +184,21 @@ class Users extends MY_Controller
 		$tdata['title'] = 'My Profile';
 		$tdata['caption'] = 'User Profile';
 
+		$email = $this->session->userdata('user_email');
+
+		## GET USER ##
+		$userData = $this->UserModel->getByEmail($email);
+		$tdata['lists'] = array(
+			'id' => $userData->id,
+			'name' => $userData->name,
+			'email' => $userData->email,
+			'brand' => $userData->brand_id,
+			'date_created' => $userData->date_created
+		);
+
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/user_profile', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 

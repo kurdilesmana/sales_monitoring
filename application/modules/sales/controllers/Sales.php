@@ -23,7 +23,7 @@ class Sales extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/index_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 
 		$this->load->sharedView('base', $ldata);
 	}
@@ -36,82 +36,85 @@ class Sales extends MY_Controller
 		if ($_POST) {
 			//set form validation
 			$this->form_validation->set_rules('tgl_input', 'Tanggal Input', 'required');
-			$this->form_validation->set_rules('brands', 'Brands', 'required');
-			$this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[50]');
-			$this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[50]');
+			$this->form_validation->set_rules('brand_id', 'Brands', 'required');
+			$this->form_validation->set_rules('area_id', 'Area', 'required');
+			$this->form_validation->set_rules('omset', 'Omset', 'required');
+			$this->form_validation->set_rules('quantity', 'Deskripsi', 'required');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi.');
-			$this->form_validation->set_message('max_length', '{field} maximal harus {param} karakter.');
 
 			//cek validasi
 			if ($this->form_validation->run() == TRUE) {
 				//get data dari FORM
-				$brands_code = $this->input->post('brands_code', TRUE);
-				$brands_name = $this->input->post('brands_name', TRUE);
-				$description = $this->input->post('description', TRUE);
-				$status = $this->input->post('status', TRUE);
+				$tgl_input = $this->input->post('tgl_input', TRUE);
+				$brand_id = $this->input->post('brand_id', TRUE);
+				$area_id = $this->input->post('area_id', TRUE);
+				$omset = $this->input->post('omset', TRUE);
+				$quantity = $this->input->post('quantity', TRUE);
 
 				//insert data via model
-				$doInsert = $this->BrandsModel->entriData(array(
-					'brands_code' => $brands_code,
-					'brands_name' => $brands_name,
-					'description' => $description,
-					'status' => $status,
+				$doInsert = $this->SalesModel->entriData(array(
+					'tgl_input' => date('Y-m-d', strtotime($tgl_input)),
+					'brand_id' => $brand_id,
+					'area_id' => $area_id,
+					'omset' => $omset,
+					'quantity' => $quantity,
 				));
 
-				//Pengecekan input data brands
-				if ($doInsert == 'exist') {
-					$tdata['error'] = 'Username sudah terdaftar!';
-				} elseif ($doInsert == 'failed') {
+				//Pengecekan input data
+				if ($doInsert == 'failed') {
 					$tdata['error'] = 'Data tidak bisa ditambahkan!';
 				} else {
 					$this->session->set_flashdata('success', 'Berhasil disimpan');
-					redirect(base_url() . 'brands');
+					redirect(base_url('sales'));
 				}
 			}
 		}
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_form', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
 	function update()
 	{
-		$tdata['title'] = 'Brands';
-		$tdata['caption'] = 'Ubah Brands';
+		$tdata['title'] = 'Sales';
+		$tdata['caption'] = 'Ubah Sales';
 
 		$id = intval($_GET['id']);
-		if (!isset($id)) redirect(base_url() . 'brands');
+		if (!isset($id)) redirect(base_url() . 'sales');
 
 		if ($_POST) {
 			//set form validation
-			$this->form_validation->set_rules('brands_code', 'Kode brands', 'required');
-			$this->form_validation->set_rules('brands_name', 'Nama Brands', 'trim|required|max_length[25]');
-			$this->form_validation->set_rules('description', 'Deskripsi', 'trim|required|max_length[50]');
+			$this->form_validation->set_rules('tgl_input', 'Tanggal Input', 'required');
+			$this->form_validation->set_rules('brand_id', 'Brands', 'required');
+			$this->form_validation->set_rules('area_id', 'Area', 'required');
+			$this->form_validation->set_rules('omset', 'Omset', 'required');
+			$this->form_validation->set_rules('quantity', 'Deskripsi', 'required');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi.');
-			$this->form_validation->set_message('max_length', '{field} maximal harus {param} karakter.');
 
 			//cek validasi
 			if ($this->form_validation->run() == TRUE) {
 				//get data dari FORM
-				$id_brands = $this->input->post("id_brands", TRUE);
-				$brands_code = $this->input->post("brands_code", TRUE);
-				$brands_name = $this->input->post("brands_name", TRUE);
-				$description = MD5($this->input->post('description', TRUE));
-				$status = $this->input->post('status', TRUE);
+				$id_sales = $this->input->post('id_sales', TRUE);
+				$tgl_input = $this->input->post('tgl_input', TRUE);
+				$brand_id = $this->input->post('brand_id', TRUE);
+				$area_id = $this->input->post('area_id', TRUE);
+				$omset = $this->input->post('omset', TRUE);
+				$quantity = $this->input->post('quantity', TRUE);
 
 				//insert data via model
-				$doUpdate = $this->BrandsModel->updateData(array(
-					'id_brands' => $id_brands,
-					'brands_code' => $brands_code,
-					'brands_name' => $brands_name,
-					'description' => $description,
-					'status' => $status,
+				$doUpdate = $this->SalesModel->updateData(array(
+					'id_sales' => $id_sales,
+					'tgl_input' => $tgl_input,
+					'brand_id' => $brand_id,
+					'area_id' => $area_id,
+					'omset' => $omset,
+					'quantity' => $quantity,
 				));
 
 				//Pengecekan input data user
@@ -119,23 +122,42 @@ class Sales extends MY_Controller
 					$tdata['error'] = 'Data tidak bisa ditambahkan!';
 				} else {
 					$this->session->set_flashdata('success', 'Berhasil disimpan');
-					redirect(base_url() . 'brands');
+					redirect(base_url() . 'sales');
 				}
 			}
 		}
 
 		## GET USER ##
-		$brandsData = $this->BrandsModel->getById($id);
+		$salesData = $this->SalesModel->getById($id);
 		$tdata['lists'] = array(
-			'id_brands' => $brandsData->id_brands,
-			'brands_code' => $brandsData->brands_code,
-			'brands_name' => $brandsData->brands_name,
-			'description' => $brandsData->description,
-			'status' => $brandsData->status
+			'id_sales' => $salesData->id,
+			'tgl_input' => date('d/m/Y', strtotime($salesData->tgl_input)),
+			'brand_id' => $salesData->brand_id,
+			'area_id' => $salesData->area_id,
+			'omset' => $salesData->omset,
+			'quantity' => $salesData->quantity,
 		);
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form_update', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_form', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function delete()
+	{
+		$id_sales = $this->input->post("id_sales", TRUE);
+		$doDelete = $this->SalesModel->deleteData($id_sales);
+
+		if ($doDelete == 'failed') {
+			$tdata['error'] = 'Data gagal dihapus!';
+		} else {
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect(base_url() . 'sales');
+		}
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -147,9 +169,9 @@ class Sales extends MY_Controller
 		$order_index = $_POST['order'][0]['column']; // Untuk mengambil index yg menjadi acuan untuk sorting
 		$order_field = $_POST['columns'][$order_index]['data']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 		$order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
-		$sql_total = $this->BrandsModel->count_all(); // Panggil fungsi count_all pada UserModel
-		$sql_data = $this->BrandsModel->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada UserModel
-		$sql_filter = $this->BrandsModel->count_filter($search); // Panggil fungsi count_filter pada UserModel
+		$sql_total = $this->SalesModel->count_all(); // Panggil fungsi count_all pada UserModel
+		$sql_data = $this->SalesModel->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada UserModel
+		$sql_filter = $this->SalesModel->count_filter($search); // Panggil fungsi count_filter pada UserModel
 		$callback = array(
 			'draw' => $_POST['draw'], // Ini dari datatablenya
 			'recordsTotal' => $sql_total,
@@ -158,18 +180,5 @@ class Sales extends MY_Controller
 		);
 		header('Content-Type: application/json');
 		echo json_encode($callback); // Convert array $callback ke json
-	}
-	function searchBrands()
-	{
-		$json = [];
-		$q = $this->input->get("q");
-		$id = $this->input->get("id");
-		if (!empty($q) or !empty($id)) {
-			$this->db->like('id', $q);
-			$this->db->or_like('name', $q);
-			$query = $this->db->select('id, name as text')->limit(10)->get("brands");
-			$json = $query->result();
-		}
-		echo json_encode($json);
 	}
 }

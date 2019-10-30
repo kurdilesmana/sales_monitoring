@@ -23,18 +23,16 @@
       },
       "deferRender": true,
       "columns": [{
-          "data": "name"
-        }, // Tampilkan nama
-        // { "render": function ( data, type, row ) {  // Tampilkan status
-        //   var status = ""
-        //   if(row.status == 1){ // Jika status 1
-        //   	status = 'Aktif' // Set Admin
-        //   } else { // Jika bukan 1
-        //     status = 'Tidak Aktif' // Set status
-        //   }
-        //     return status; // Tampilkan jenis kelaminnya
-        //   }
-        // },
+          "data": "tgl"
+        }, {
+          "data": "brand"
+        }, {
+          "data": "area"
+        }, {
+          "data": "omset"
+        }, {
+          "data": "quantity"
+        },
         {
           sWidth: "17%",
           "render": function(data, type, row) { // Tampilkan kolom aksi
@@ -48,8 +46,14 @@
     $('#myTable').on('click', 'tbody .edit_btn', function() {
       var data_row = tabel.row($(this).closest('tr')).data();
       $.redirect('<?php echo base_url() . $this->router->class . '/update'; ?>', {
-        'id': data_row['id_brands']
+        'id': data_row['id']
       }, 'GET');
+    });
+    $('#myTable').on('click', 'tbody .delete_btn', function() {
+      var data_row = tabel.row($(this).closest('tr')).data();
+      var id_sales = data_row['id'];
+      $(".modal-header #id_sales").val(id_sales);
+      $('#modalHapus').modal('show');
     });
   });
 </script>

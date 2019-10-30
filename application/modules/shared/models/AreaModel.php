@@ -34,33 +34,27 @@ class AreaModel extends CI_Model
 
 	public function entriData($data = array())
 	{
-		$brands_code     = $data["brands_code"];
-		$check = $this->__checkBrandsCode($brands_code);
-		if ($check > 0) {
-			return 'exist';
+		$check = $this->db->insert($this->_table, $data);
+		if (!$check) {
+			return 'failed';
 		} else {
-			$this->db->insert($this->_table, $data);
 			return 'success';
 		}
 	}
 
 	public function updateData($data = array())
 	{
-		$id_brands       = $data["id_brands"];
-		$brands_code       = $data["brands_code"];
-		$brands_name       = $data["brands_name"];
-		$description       = $data["description"];
-		$status            = $data["status"];
+		$id_area = $data["id_area"];
+		$area_name = $data["area_name"];
 
-		$sql_user = "brands_code = '" . $this->db->escape_str($brands_code) . "', brands_name = '" . $this->db->escape_str($brands_name) . "', description = '" . $this->db->escape_str($description) . "', status = '" . $this->db->escape_str($status) . "'";
-
+		$sql_user = "name = '" . $this->db->escape_str($area_name) . "'";
 
 		$doUpdate = $this->db->query("
-    UPDATE " . $this->_table . "
-    SET 
-      " . $sql_user . "
-    WHERE 
-      id_brands = " . $id_brands . "
+			UPDATE " . $this->_table . "
+			SET 
+				" . $sql_user . "
+			WHERE 
+				id = " . $id_area . "
     ");
 
 		if ($doUpdate) {
@@ -70,18 +64,14 @@ class AreaModel extends CI_Model
 		}
 	}
 
-	private function __checkBrandsCode($brands_code)
+	public function deleteData($id)
 	{
-		$q = $this->db->query("
-      SELECT
-        id_brands
-        ,brands_code
-      FROM
-        " . $this->_table . "
-      WHERE
-        brands_code = '" . $this->db->escape_str($brands_code) . "'
-    ");
-		$result = $q->num_rows();
-		return $result;
+		$doDelete = $this->db->delete($this->_table, array('id' => $id));
+
+		if (!$doDelete) {
+			return 'failed';
+		} else {
+			return 'success';
+		}
 	}
 }

@@ -7,7 +7,7 @@
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url() . 'brands/update?id=' . $lists['id_brands']; ?>" method="post">
+      <form class="form-horizontal" action="<?php echo base_url() . 'area/update?id=' . $lists['id_area']; ?>" method="post">
         <div class="box-body">
           <?php if (isset($error)) { ?>
             <div class="alert alert-danger alert-dismissible" style="margin-top: 3px">
@@ -15,19 +15,19 @@
               <div class="header"><b><i class="fa fa-exclamation-circle"></i> ERROR</b> <?php echo ($error); ?></div>
             </div>
           <?php } ?>
-          <div class="form-group <?= form_error('id_brands') ? 'has-error' : '' ?>" hidden>
-            <label for="id_brands" class="col-sm-3 control-label">id brands</label>
+          <div class="form-group <?= form_error('id_area') ? 'has-error' : '' ?>" hidden>
+            <label for="id_area" class="col-sm-3 control-label">id brands</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="id_brands" placeholder="Id Brands" value="<?php echo isset($lists) ? $lists['id_brands'] : set_value('id_brands'); ?>">
+              <input type="text" class="form-control" name="id_area" placeholder="Id Brands" value="<?php echo isset($lists) ? $lists['id_area'] : set_value('id_area'); ?>">
             </div>
-            <span class="help-block"><?php echo form_error('id_brands'); ?></span>
+            <span class="help-block"><?php echo form_error('id_area'); ?></span>
           </div>
-          <div class="form-group <?= form_error('brands_name') ? 'has-error' : '' ?>">
-            <label for="brands_name" class="col-sm-3 control-label">Nama Brands</label>
+          <div class="form-group <?= form_error('area_name') ? 'has-error' : '' ?>">
+            <label for="area_name" class="col-sm-3 control-label">Nama Area</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" name="brands_name" placeholder="Nama Brands" value="<?php echo isset($lists) ? $lists['brands_name'] : set_value('brands_name'); ?>">
+              <input type="text" class="form-control" name="area_name" placeholder="Nama area" value="<?php echo isset($lists) ? $lists['area_name'] : set_value('area_name'); ?>">
             </div>
-            <span class="help-block"><?php echo form_error('brands_name'); ?></span>
+            <span class="help-block"><?php echo form_error('area_name'); ?></span>
           </div>
           <div class="form-group">
             <label for="Simpan" class="col-sm-3 control-label"></label>

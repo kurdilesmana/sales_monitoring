@@ -10,10 +10,21 @@ class SalesModel extends CI_Model
 
   public function filter($search, $limit, $start, $order_field, $order_ascdesc)
   {
-    $this->db->like('name', $search); // Untuk menambahkan query where LIKE
+    $this->db->like('tgl_input', $search); // Untuk menambahkan query where LIKE
     $this->db->order_by($order_field, $order_ascdesc); // Untuk menambahkan query ORDER BY
     $this->db->limit($limit, $start); // Untuk menambahkan query LIMIT
-    return $this->db->get($this->_table)->result_array(); // Eksekusi query sql sesuai kondisi diatas
+
+    $this->db->select(
+      'date_format(sales.tgl_input, "%d/%m/%Y") as tgl, 
+      nvl(brands.name, "undefined") as brand, 
+      nvl(area.name, "undefined") as area,
+      sales.*'
+    );
+    $this->db->from($this->_table);
+    $this->db->join('brands', 'brands.id=sales.brand_id', 'left');
+    $this->db->join('area', 'area.id=sales.area_id', 'left');
+    $query = $this->db->get()->result_array();
+    return $query; // Eksekusi query sql sesuai kondisi diatas
   }
 
   public function getById($id)
@@ -28,43 +39,46 @@ class SalesModel extends CI_Model
 
   public function count_filter($search)
   {
-    $this->db->like('name', $search); // Untuk menambahkan query where LIKE
+    $this->db->like('area_id', $search); // Untuk menambahkan query where LIKE
     return $this->db->get($this->_table)->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
   }
 
   public function entriData($data = array())
   {
-    $brands_code     = $data["brands_code"];
-    $check = $this->__checkBrandsCode($brands_code);
-    if ($check > 0) {
-      return 'exist';
-    } else {
-      $this->db->insert($this->_table, $data);
+    $check = $this->db->insert($this->_table, $data);
+    if ($check) {
       return 'success';
+    } else {
+      return 'failed';
     }
   }
 
   public function updateData($data = array())
   {
-    $id_brands       = $data["id_brands"];
-    $brands_code       = $data["brands_code"];
-    $brands_name       = $data["brands_name"];
-    $description       = $data["description"];
-    $status            = $data["status"];
+    $id_sales = $data["id_sales"];
+    $tgl_input = $data["tgl_input"];
+    $brand_id = $data["brand_id"];
+    $area_id = $data["area_id"];
+    $omset = $data["omset"];
+    $quantity = $data["quantity"];
 
     $sql_user = "
-      brands_code = '" . $this->db->escape_str($brands_code) . "', 
-      brands_name = '" . $this->db->escape_str($brands_name) . "', 
-      description = '" . $this->db->escape_str($description) . "', 
-      status = '" . $this->db->escape_str($status) . "'
+      tgl_input = str_to_date('$tgl_input', '%d/%m/%Y'), 
+      brand_id = $brand_id,
+      area_id = $area_id, 
+      omset = $omset,
+      quantity = $quantity
     ";
 
+    // var_dump($sql_user);
+    // die();
+
     $doUpdate = $this->db->query("
-    UPDATE " . $this->_table . "
-    SET 
-      " . $sql_user . "
-    WHERE 
-      id_brands = " . $id_brands . "
+      UPDATE " . $this->_table . "
+      SET 
+        " . $sql_user . "
+      WHERE 
+        id = " . $id_sales . "
     ");
 
     if ($doUpdate) {
@@ -74,18 +88,14 @@ class SalesModel extends CI_Model
     }
   }
 
-  private function __checkBrandsCode($brands_code)
+  public function deleteData($id)
   {
-    $q = $this->db->query("
-      SELECT
-        id_brands
-        ,brands_code
-      FROM
-        " . $this->_table . "
-      WHERE
-        brands_code = '" . $this->db->escape_str($brands_code) . "'
-    ");
-    $result = $q->num_rows();
-    return $result;
+    $doDelete = $this->db->delete($this->_table, array('id' => $id));
+
+    if (!$doDelete) {
+      return 'failed';
+    } else {
+      return 'success';
+    }
   }
 }

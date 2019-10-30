@@ -61,5 +61,6 @@
       $(".modal-header #id_user").val(id_user);
       $('#modalHapus').modal('show');
     });
+    $("#tabs").tabs();
   });
 </script>

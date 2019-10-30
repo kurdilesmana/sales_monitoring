@@ -3,51 +3,51 @@
     <div class="box box-info">
       <div class="box-header with-border">
         <i class="fa fa-user"></i>
-        <h3 class="box-title"><?php echo $caption ?></h3> 
+        <h3 class="box-title"><?php echo $caption ?></h3>
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url().'users/update?id='.$lists['id']; ?>" method="post">
+      <form class="form-horizontal" action="<?php echo base_url() . 'users/update?id=' . $lists['id']; ?>" method="post">
         <div class="box-body">
-          <?php if(isset($error)) { ?>
-          <div class="alert alert-danger alert-dismissible" style="margin-top: 3px">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <div class="header"><b><i class="fa fa-exclamation-circle"></i> ERROR</b> <?php echo($error); ?></div>
-          </div>
+          <?php if (isset($error)) { ?>
+            <div class="alert alert-danger alert-dismissible" style="margin-top: 3px">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <div class="header"><b><i class="fa fa-exclamation-circle"></i> ERROR</b> <?php echo ($error); ?></div>
+            </div>
           <?php } ?>
           <div class="row">
             <div class="col-md-6">
-              <div class="form-group" hidden> 
+              <div class="form-group" hidden>
                 <label for="nama" class="col-sm-3 control-label">ID</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control" name="id" placeholder="Nama" value="<?php echo isset($lists)?$lists['id']:''; ?>">
+                  <input type="text" class="form-control" name="id" placeholder="Nama" value="<?php echo isset($lists) ? $lists['id'] : ''; ?>">
                 </div>
                 <span class="help-block"><?php echo form_error('name'); ?></span>
               </div>
               <div class="form-group <?= form_error('name') ? 'has-error' : '' ?>">
                 <label for="nama" class="col-sm-3 control-label">Nama</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control" name="name" placeholder="Nama" value="<?php echo isset($lists)?$lists['name']:set_value('name'); ?>">
+                  <input type="text" class="form-control" name="name" placeholder="Nama" value="<?php echo isset($lists) ? $lists['name'] : set_value('name'); ?>">
                 </div>
                 <span class="help-block"><?php echo form_error('name'); ?></span>
               </div>
               <div class="form-group <?= form_error('email') ? 'has-error' : '' ?>">
                 <label for="email" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-6">
-                  <input type="email" class="form-control" name="email" placeholder="email" value="<?php echo isset($lists)?$lists['email']:set_value('email'); ?>">
+                  <input type="email" class="form-control" name="email" placeholder="email" value="<?php echo isset($lists) ? $lists['email'] : set_value('email'); ?>">
                 </div>
                 <span class="help-block"><?php echo form_error('email'); ?></span>
               </div>
               <div class="form-group">
                 <label for="role" class="col-sm-3 control-label">Role</label>
                 <div class="col-sm-6">
-                  <select id="select2" class="form-control select2 select2-hidden-accessible" name="role" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <select id="selectRole" class="form-control select2 select2-hidden-accessible" name="role" style="width: 100%;" tabindex="-1" aria-hidden="true">
                   </select>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group"> 
+              <div class="form-group">
                 <label for="nama" class="col-sm-3 control-label"></label>
                 <div class="col-sm-6">
                   <small>leave blank if you don't want to change it</small>

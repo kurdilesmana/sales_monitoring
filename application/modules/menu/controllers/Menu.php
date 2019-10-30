@@ -20,7 +20,7 @@ class Menu extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/index_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -31,7 +31,7 @@ class Menu extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/subMenu', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/subMenu_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_subMenu', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -42,7 +42,7 @@ class Menu extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/accessMenu', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/accessMenu_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_accessMenu', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -209,7 +209,7 @@ class Menu extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/subform_add', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/subform_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_subform', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -249,7 +249,7 @@ class Menu extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/accessform_add', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/accessform_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_accessform', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 }

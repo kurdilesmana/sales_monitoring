@@ -38,7 +38,7 @@
           <div class="form-group <?= form_error('area_id') ? 'has-error' : '' ?>">
             <label for="area_id" class="col-sm-3 control-label">Area</label>
             <div class="col-sm-6">
-              <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              <select id="selectArea" class="form-control select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
               </select>
             </div>
             <span class="help-block"><?php echo form_error('area_id'); ?></span>
@@ -46,23 +46,16 @@
           <div class="form-group <?= form_error('omset') ? 'has-error' : '' ?>">
             <label for="omset" class="col-sm-3 control-label">Omset</label>
             <div class="col-sm-6">
-              <input type="number" class="form-control" name="omset" placeholder="Nama Brands" value="<?php echo isset($lists) ? $lists->omset : set_value('omset'); ?>">
+              <input type="number" class="form-control" name="omset" placeholder="Omset" value="<?php echo isset($lists) ? $lists->omset : set_value('omset'); ?>">
             </div>
             <span class="help-block"><?php echo form_error('omset'); ?></span>
           </div>
-          <div class="form-group <?= form_error('description') ? 'has-error' : '' ?>">
-            <label for="description" class="col-sm-3 control-label">Deskripsi</label>
+          <div class="form-group <?= form_error('quantity') ? 'has-error' : '' ?>">
+            <label for="quantity" class="col-sm-3 control-label">Quantity</label>
             <div class="col-sm-6">
-              <input type="description" class="form-control" name="description" placeholder="Deskripsi" value="<?php echo isset($lists) ? $lists->description : set_value('description'); ?>">
+              <input type="number" class="form-control" name="quantity" placeholder="quantity" value="<?php echo isset($lists) ? $lists->quantity : set_value('quantity'); ?>">
             </div>
-            <span class="help-block"><?php echo form_error('description'); ?></span>
-          </div>
-          <div class="form-group">
-            <label for="status" class="col-sm-3 control-label">Status</label>
-            <div class="col-sm-6">
-              <select id="select2" class="form-control select2 select2-hidden-accessible" name="status" style="width: 100%;" tabindex="-1" aria-hidden="true">
-              </select>
-            </div>
+            <span class="help-block"><?php echo form_error('quantity'); ?></span>
           </div>
           <div class="form-group">
             <label for="Simpan" class="col-sm-3 control-label"></label>

@@ -23,7 +23,7 @@ class Brands extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/index_js', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 
 		$this->load->sharedView('base', $ldata);
 	}
@@ -35,9 +35,7 @@ class Brands extends MY_Controller
 
 		if ($_POST) {
 			//set form validation
-			// $this->form_validation->set_rules('brands_code', 'Kode brands', 'required');
 			$this->form_validation->set_rules('brands_name', 'Nama Brands', 'required|max_length[25]');
-			$this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[50]');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi.');
@@ -46,23 +44,15 @@ class Brands extends MY_Controller
 			//cek validasi
 			if ($this->form_validation->run() == TRUE) {
 				//get data dari FORM
-				$brands_code = $this->input->post('brands_code', TRUE);
 				$brands_name = $this->input->post('brands_name', TRUE);
-				$description = $this->input->post('description', TRUE);
-				$status = $this->input->post('status', TRUE);
 
 				//insert data via model
 				$doInsert = $this->BrandsModel->entriData(array(
-					'brands_code' => $brands_code,
-					'brands_name' => $brands_name,
-					'description' => $description,
-					'status' => $status,
+					'name' => $brands_name
 				));
 
-				//Pengecekan input data brands
-				if ($doInsert == 'exist') {
-					$tdata['error'] = 'Username sudah terdaftar!';
-				} elseif ($doInsert == 'failed') {
+				//Pengecekan input data 
+				if ($doInsert == 'failed') {
 					$tdata['error'] = 'Data tidak bisa ditambahkan!';
 				} else {
 					$this->session->set_flashdata('success', 'Berhasil disimpan');
@@ -73,7 +63,6 @@ class Brands extends MY_Controller
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -87,9 +76,7 @@ class Brands extends MY_Controller
 
 		if ($_POST) {
 			//set form validation
-			$this->form_validation->set_rules('brands_code', 'Kode brands', 'required');
 			$this->form_validation->set_rules('brands_name', 'Nama Brands', 'trim|required|max_length[25]');
-			$this->form_validation->set_rules('description', 'Deskripsi', 'trim|required|max_length[50]');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi.');
@@ -99,18 +86,12 @@ class Brands extends MY_Controller
 			if ($this->form_validation->run() == TRUE) {
 				//get data dari FORM
 				$id_brands = $this->input->post("id_brands", TRUE);
-				$brands_code = $this->input->post("brands_code", TRUE);
 				$brands_name = $this->input->post("brands_name", TRUE);
-				$description = MD5($this->input->post('description', TRUE));
-				$status = $this->input->post('status', TRUE);
 
 				//insert data via model
 				$doUpdate = $this->BrandsModel->updateData(array(
 					'id_brands' => $id_brands,
-					'brands_code' => $brands_code,
-					'brands_name' => $brands_name,
-					'description' => $description,
-					'status' => $status,
+					'brands_name' => $brands_name
 				));
 
 				//Pengecekan input data user
@@ -126,15 +107,30 @@ class Brands extends MY_Controller
 		## GET USER ##
 		$brandsData = $this->BrandsModel->getById($id);
 		$tdata['lists'] = array(
-			'id_brands' => $brandsData->id_brands,
-			'brands_code' => $brandsData->brands_code,
-			'brands_name' => $brandsData->brands_name,
-			'description' => $brandsData->description,
-			'status' => $brandsData->status
+			'id_brands' => $brandsData->id,
+			'brands_name' => $brandsData->name,
 		);
+
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/form_update', $tdata, true);
-		$ldata['script'] = $this->load->view($this->router->class . '/form_js', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function delete()
+	{
+		$id_brands = $this->input->post("id_brands", TRUE);
+		$doDelete = $this->BrandsModel->deleteData($id_brands);
+
+		if ($doDelete == 'failed') {
+			$tdata['error'] = 'Data gagal dihapus!';
+		} else {
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect(base_url() . 'brands');
+		}
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 
@@ -158,6 +154,7 @@ class Brands extends MY_Controller
 		header('Content-Type: application/json');
 		echo json_encode($callback); // Convert array $callback ke json
 	}
+
 	function searchBrands()
 	{
 		$json = [];

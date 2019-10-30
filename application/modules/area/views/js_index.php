@@ -38,8 +38,14 @@
     $('#myTable').on('click', 'tbody .edit_btn', function() {
       var data_row = tabel.row($(this).closest('tr')).data();
       $.redirect('<?php echo base_url() . $this->router->class . '/update'; ?>', {
-        'id': data_row['id_brands']
+        'id': data_row['id']
       }, 'GET');
+    });
+    $('#myTable').on('click', 'tbody .delete_btn', function() {
+      var data_row = tabel.row($(this).closest('tr')).data();
+      var id_area = data_row['id'];
+      $(".modal-header #id_area").val(id_area);
+      $('#modalHapus').modal('show');
     });
   });
 </script>

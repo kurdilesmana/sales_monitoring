@@ -22,6 +22,11 @@ class UserModel extends CI_Model
     return $this->db->get_where($this->_table, ["id" => $id])->row();
   }
 
+  public function getByEmail($email)
+  {
+    return $this->db->get_where($this->_table, ["email" => $email])->row();
+  }
+
   public function count_all()
   {
     return $this->db->count_all($this->_table); // Untuk menghitung semua data users

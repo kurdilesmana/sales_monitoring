@@ -32,7 +32,7 @@
           <div class="form-group <?= form_error('brand_id') ? 'has-error' : '' ?>">
             <label for="brand_id" class="col-sm-3 control-label">Brand</label>
             <div class="col-sm-6">
-              <select id="selectBrand" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
               </select>
             </div>
             <span class="help-block"><?php echo form_error('brand_id'); ?></span>
