@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2019 at 03:00 AM
--- Server version: 10.1.39-MariaDB
--- PHP Version: 7.3.5
+-- Generation Time: Oct 31, 2019 at 11:05 AM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -39,7 +39,8 @@ CREATE TABLE `area` (
 
 INSERT INTO `area` (`id`, `name`) VALUES
 (1, 'Promo'),
-(2, 'Atrium');
+(3, 'Lantai GF'),
+(4, 'Foodcourt');
 
 -- --------------------------------------------------------
 
@@ -57,7 +58,8 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `name`) VALUES
-(1, 'Nike');
+(2, 'Puma'),
+(4, 'Under Armor');
 
 -- --------------------------------------------------------
 
@@ -67,12 +69,20 @@ INSERT INTO `brands` (`id`, `name`) VALUES
 
 CREATE TABLE `sales` (
   `id` int(11) NOT NULL,
-  `tgl_input` date NOT NULL,
+  `tgl_input` date NOT NULL DEFAULT current_timestamp(),
   `area_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `omset` double NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `tgl_input`, `area_id`, `brand_id`, `omset`, `quantity`) VALUES
+(5, '2019-10-29', 3, 4, 1000, 12),
+(6, '2019-10-31', 4, 2, 150, 12);
 
 -- --------------------------------------------------------
 
@@ -89,7 +99,7 @@ CREATE TABLE `users` (
   `image` varchar(50) NOT NULL DEFAULT 'default.jpg',
   `role_id` int(11) NOT NULL,
   `is_active` int(1) NOT NULL,
-  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -163,11 +173,11 @@ CREATE TABLE `user_menu` (
   `header_id` int(11) NOT NULL,
   `no_order` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `is_parent` int(1) DEFAULT '0',
+  `is_parent` int(1) DEFAULT 0,
   `parent_id` int(11) DEFAULT NULL,
   `url` varchar(100) NOT NULL,
   `icon` varchar(100) NOT NULL,
-  `is_active` int(1) NOT NULL DEFAULT '1'
+  `is_active` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -266,19 +276,19 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `area`
 --
 ALTER TABLE `area`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
