@@ -69,7 +69,7 @@ INSERT INTO `brands` (`id`, `name`) VALUES
 
 CREATE TABLE `sales` (
   `id` int(11) NOT NULL,
-  `tgl_input` date NOT NULL DEFAULT current_timestamp(),
+  `tgl_input` date NOT NULL,
   `area_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `omset` double NOT NULL,
