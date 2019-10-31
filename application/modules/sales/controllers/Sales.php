@@ -53,9 +53,12 @@ class Sales extends MY_Controller
 				$omset = $this->input->post('omset', TRUE);
 				$quantity = $this->input->post('quantity', TRUE);
 
+				$date = str_replace('/', '-', $tgl_input);
+				$newDate = date("Y-m-d", strtotime($date));
+
 				//insert data via model
 				$doInsert = $this->SalesModel->entriData(array(
-					'tgl_input' => date('Y-m-d', strtotime($tgl_input)),
+					'tgl_input' => $newDate,
 					'brand_id' => $brand_id,
 					'area_id' => $area_id,
 					'omset' => $omset,
