@@ -13,7 +13,6 @@ class SalesModel extends CI_Model
     $this->db->like('tgl_input', $search); // Untuk menambahkan query where LIKE
     $this->db->order_by($order_field, $order_ascdesc); // Untuk menambahkan query ORDER BY
     $this->db->limit($limit, $start); // Untuk menambahkan query LIMIT
-
     $this->db->select(
       'date_format(sales.tgl_input, "%d/%m/%Y") as tgl, 
       COALESCE(brands.name, "undefined") as brand, 
