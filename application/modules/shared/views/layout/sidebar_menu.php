@@ -25,9 +25,8 @@
             ?>
 
           <?php foreach ($menu as $m) {
-              if ($m['is_parent'] == 1) {
-                $parentID = $m['menu_id'];
-                $qSubMenu = "SELECT * 
+              $parentID = $m['menu_id'];
+              $qSubMenu = "SELECT * 
                         FROM user_menu m 
                         INNER JOIN user_access_menu am ON m.id = am.menu_id
                         WHERE m.header_id = $headerID
@@ -35,8 +34,8 @@
                         AND am.role_id = $roleID
                         AND m.is_active = 1
                         ORDER BY no_order ASC";
-                $subMenu = $this->db->query($qSubMenu)->result_array();
-                ?>
+              $subMenu = $this->db->query($qSubMenu)->result_array();
+              if ($subMenu) { ?>
               <li class="treeview <?php echo $this->uri->segment(1) == $m['url'] ? 'active menu-open' : '' ?>">
                 <a href="#">
                   <i class="<?php echo $m['icon']; ?>"></i> <span><?= $m['title']; ?></span>

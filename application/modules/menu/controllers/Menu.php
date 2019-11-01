@@ -170,8 +170,8 @@ class Menu extends MY_Controller
 
 	function addSubmenu()
 	{
-		$tdata['title'] = 'Submenu';
-		$tdata['caption'] = 'Tambah Data Submenu';
+		$tdata['title'] = 'Menu';
+		$tdata['caption'] = 'Tambah Data Menu';
 
 		if ($_POST) {
 			//set form validation
@@ -179,6 +179,7 @@ class Menu extends MY_Controller
 			$this->form_validation->set_rules('title', 'Title', 'required');
 			$this->form_validation->set_rules('url', 'URL', 'required');
 			$this->form_validation->set_rules('icon', 'Icon', 'required');
+			$this->form_validation->set_rules('no_order', 'Nomor Order', 'required');
 
 			//set message form validation
 			$this->form_validation->set_message('required', '{field} harus diisi.');
@@ -191,6 +192,7 @@ class Menu extends MY_Controller
 					'title' => htmlspecialchars($this->input->post("title", TRUE)),
 					'url' => htmlspecialchars($this->input->post("url", TRUE)),
 					'icon' => htmlspecialchars($this->input->post("icon", TRUE)),
+					'no_order' => htmlspecialchars($this->input->post("no_order", TRUE)),
 					'is_active' => $this->input->post('is_active', TRUE),
 				];
 

@@ -44,6 +44,21 @@
             </div>
             <span class="help-block"><?php echo form_error('icon'); ?></span>
           </div>
+          <div class="form-group <?= form_error('no_order') ? 'has-error' : '' ?>">
+            <label for="no_order" class="col-sm-3 control-label">No Order</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="no_order" placeholder="Nomor Order Menu" value="<?php echo set_value('no_order'); ?>">
+            </div>
+            <span class="help-block"><?php echo form_error('no_order'); ?></span>
+          </div>
+          <div class="form-group <?= form_error('parent_id') ? 'has-error' : '' ?>">
+            <label for="parent_id" class="col-sm-3 control-label">Parent Menu</label>
+            <div class="col-sm-6">
+              <select id="parent_id" class="form-control select2 select2-hidden-accessible" name="parent_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              </select>
+            </div>
+            <span class="help-block"><?php echo form_error('is_active'); ?></span>
+          </div>
           <div class="form-group <?= form_error('is_active') ? 'has-error' : '' ?>">
             <label for="is_active" class="col-sm-3 control-label">Status</label>
             <div class="col-sm-6">
@@ -51,15 +66,6 @@
               </select>
             </div>
             <span class="help-block"><?php echo form_error('is_active'); ?></span>
-          </div>
-          <div class="form-group <?= form_error('is_parent') ? 'has-error' : '' ?>">
-            <label for="is_parent" class="col-sm-3 control-label"></label>
-            <div class="col-sm-6 checkbox">
-              <label>
-                <input type="checkbox"> Check me out
-              </label>
-            </div>
-            <span class="help-block"><?php echo form_error('is_parent'); ?></span>
           </div>
           <div class="form-group">
             <label for="inputPassword3" class="col-sm-3 control-label"></label>

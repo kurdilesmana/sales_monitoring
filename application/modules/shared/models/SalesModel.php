@@ -16,8 +16,8 @@ class SalesModel extends CI_Model
 
     $this->db->select(
       'date_format(sales.tgl_input, "%d/%m/%Y") as tgl, 
-      nvl(brands.name, "undefined") as brand, 
-      nvl(area.name, "undefined") as area,
+      COALESCE(brands.name, "undefined") as brand, 
+      COALESCE(area.name, "undefined") as area,
       sales.*'
     );
     $this->db->from($this->_table);
@@ -97,5 +97,33 @@ class SalesModel extends CI_Model
     } else {
       return 'success';
     }
+  }
+
+  public function getData($data = array())
+  {
+    $tgl_awal = $data['tgl_awal'];
+    $tgl_akhir = $data['tgl_akhir'];
+    $brand_id = $data['brand_id'];
+
+    $this->db->select(
+      'date_format(sales.tgl_input, "%d/%m/%Y") as tgl, 
+      COALESCE(brands.name, "undefined") as brand, 
+      COALESCE(area.name, "undefined") as area,
+      sales.*'
+    );
+    $this->db->from($this->_table);
+    $this->db->join('brands', 'brands.id=sales.brand_id', 'left');
+    $this->db->join('area', 'area.id=sales.area_id', 'left');
+
+    if ($tgl_awal) {
+      $this->db->where("sales.tgl_input >= str_to_date('$tgl_awal', '%d/%m/%Y')");
+    } elseif ($tgl_akhir) {
+      $this->db->where("sales.tgl_input <= str_to_date('$tgl_akhir', '%d/%m/%Y')");
+    } elseif ($brand_id) {
+      $this->db->where("sales.brand_id = '$brand_id'");
+    }
+
+    $query = $this->db->get()->result_array();
+    return $query;
   }
 }
