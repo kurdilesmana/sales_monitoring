@@ -42,6 +42,11 @@
                     <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                     </select>
                   </div>
+                  <div class="col-md-4">
+                    <label for="area_id" class="control-label">Area</label>
+                    <select id="selectArea" class="form-control select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    </select>
+                  </div>
                 </div>
                 <div class="form-group col-md-12">
                   <div class="col-md-4">

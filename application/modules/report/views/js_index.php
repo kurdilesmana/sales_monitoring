@@ -19,6 +19,24 @@
         },
       }
     });
+    $('#selectArea').select2({
+      placeholder: 'Pilih Area',
+      ajax: {
+        dataType: 'json',
+        url: '<?php echo base_url('area/searchArea'); ?>',
+        delay: 250,
+        data: function(params) {
+          return {
+            q: params.term,
+          }
+        },
+        processResults: function(data, page) {
+          return {
+            results: data
+          };
+        },
+      }
+    });
     $('#tgl_awal').datepicker({
       format: 'dd/mm/yyyy',
       autoclose: true

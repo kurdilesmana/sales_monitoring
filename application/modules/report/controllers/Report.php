@@ -38,12 +38,14 @@ class Report extends MY_Controller
 			$tgl_awal = $this->input->post('tgl_awal', TRUE);
 			$tgl_akhir = $this->input->post('tgl_akhir', TRUE);
 			$brand_id = $this->input->post('brand_id', TRUE);
+			$area_id = $this->input->post('area_id', TRUE);
 
 			// get data via model
 			$salesData = $this->SalesModel->getData(array(
 				'tgl_awal' => $tgl_awal,
 				'tgl_akhir' => $tgl_akhir,
-				'brand_id' => $brand_id
+				'brand_id' => $brand_id,
+				'area_id' => $area_id
 			));
 
 			// cetak pdf
