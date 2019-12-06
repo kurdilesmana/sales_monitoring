@@ -35,6 +35,14 @@
             </div>
             <span class="help-block"><?php echo form_error('brand_id'); ?></span>
           </div>
+          <div class="form-group <?= form_error('divisi_id') ? 'has-error' : '' ?>">
+            <label for="divisi_id" class="col-sm-3 control-label">Divisi</label>
+            <div class="col-sm-6">
+              <select id="selectDivisi" class="form-control select2 select2-hidden-accessible" name="divisi_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              </select>
+            </div>
+            <span class="help-block"><?php echo form_error('divisi_id'); ?></span>
+          </div>
           <div class="form-group <?= form_error('area_id') ? 'has-error' : '' ?>">
             <label for="area_id" class="col-sm-3 control-label">Area</label>
             <div class="col-sm-6">

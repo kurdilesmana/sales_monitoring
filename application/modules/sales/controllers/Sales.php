@@ -37,6 +37,7 @@ class Sales extends MY_Controller
 			//set form validation
 			$this->form_validation->set_rules('tgl_input', 'Tanggal Input', 'required');
 			$this->form_validation->set_rules('brand_id', 'Brands', 'required');
+			$this->form_validation->set_rules('divisi_id', 'Divisi', 'required');
 			$this->form_validation->set_rules('area_id', 'Area', 'required');
 			$this->form_validation->set_rules('omset', 'Omset', 'required');
 			$this->form_validation->set_rules('quantity', 'Deskripsi', 'required');
@@ -49,6 +50,7 @@ class Sales extends MY_Controller
 				//get data dari FORM
 				$tgl_input = $this->input->post('tgl_input', TRUE);
 				$brand_id = $this->input->post('brand_id', TRUE);
+				$divisi_id = $this->input->post('divisi_id', TRUE);
 				$area_id = $this->input->post('area_id', TRUE);
 				$omset = $this->input->post('omset', TRUE);
 				$quantity = $this->input->post('quantity', TRUE);
@@ -60,6 +62,7 @@ class Sales extends MY_Controller
 				$doInsert = $this->SalesModel->entriData(array(
 					'tgl_input' => $newDate,
 					'brand_id' => $brand_id,
+					'divisi_id' => $divisi_id,
 					'area_id' => $area_id,
 					'omset' => $omset,
 					'quantity' => $quantity,
@@ -93,6 +96,7 @@ class Sales extends MY_Controller
 			//set form validation
 			$this->form_validation->set_rules('tgl_input', 'Tanggal Input', 'required');
 			$this->form_validation->set_rules('brand_id', 'Brands', 'required');
+			$this->form_validation->set_rules('divisi_id', 'Divis', 'required');
 			$this->form_validation->set_rules('area_id', 'Area', 'required');
 			$this->form_validation->set_rules('omset', 'Omset', 'required');
 			$this->form_validation->set_rules('quantity', 'Deskripsi', 'required');
@@ -106,6 +110,7 @@ class Sales extends MY_Controller
 				$id_sales = $this->input->post('id_sales', TRUE);
 				$tgl_input = $this->input->post('tgl_input', TRUE);
 				$brand_id = $this->input->post('brand_id', TRUE);
+				$divisi_id = $this->input->post('divisi_id', TRUE);
 				$area_id = $this->input->post('area_id', TRUE);
 				$omset = $this->input->post('omset', TRUE);
 				$quantity = $this->input->post('quantity', TRUE);
@@ -115,6 +120,7 @@ class Sales extends MY_Controller
 					'id_sales' => $id_sales,
 					'tgl_input' => $tgl_input,
 					'brand_id' => $brand_id,
+					'divisi_id' => $divisi_id,
 					'area_id' => $area_id,
 					'omset' => $omset,
 					'quantity' => $quantity,

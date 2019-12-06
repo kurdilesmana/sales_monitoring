@@ -17,11 +17,13 @@ class SalesModel extends CI_Model
       'date_format(sales.tgl_input, "%d/%m/%Y") as tgl, 
       COALESCE(brands.name, "undefined") as brand, 
       COALESCE(area.name, "undefined") as area,
+      COALESCE(divisibrands.name, "undefined") as divisi,
       sales.*'
     );
     $this->db->from($this->_table);
     $this->db->join('brands', 'brands.id=sales.brand_id', 'left');
     $this->db->join('area', 'area.id=sales.area_id', 'left');
+    $this->db->join('divisibrands', 'divisibrands.id=sales.divisi_id', 'left');
     $query = $this->db->get()->result_array();
     return $query; // Eksekusi query sql sesuai kondisi diatas
   }
@@ -57,6 +59,7 @@ class SalesModel extends CI_Model
     $id_sales = $data["id_sales"];
     $tgl_input = $data["tgl_input"];
     $brand_id = $data["brand_id"];
+    $divisi_id = $data["divisi_id"];
     $area_id = $data["area_id"];
     $omset = $data["omset"];
     $quantity = $data["quantity"];
@@ -64,6 +67,7 @@ class SalesModel extends CI_Model
     $sql_user = "
       tgl_input = str_to_date('$tgl_input', '%d/%m/%Y'), 
       brand_id = $brand_id,
+      divisi_id = $divisi_id,
       area_id = $area_id, 
       omset = $omset,
       quantity = $quantity
@@ -103,16 +107,19 @@ class SalesModel extends CI_Model
     $tgl_awal = $data['tgl_awal'];
     $tgl_akhir = $data['tgl_akhir'];
     $brand_id = intval($data['brand_id']);
+    $divisi_id = intval($data['divisi_id']);
     $area_id = intval($data['area_id']);
 
     $this->db->select(
       'date_format(sales.tgl_input, "%d/%m/%Y") as tgl, 
       COALESCE(brands.name, "undefined") as brand, 
+      COALESCE(divisibrands.name, "undefined") as divisi, 
       COALESCE(area.name, "undefined") as area,
       sales.*'
     );
     $this->db->from($this->_table);
     $this->db->join('brands', 'brands.id=sales.brand_id', 'left');
+    $this->db->join('divisibrands', 'divisibrands.id=sales.divisi_id', 'left');
     $this->db->join('area', 'area.id=sales.area_id', 'left');
     $this->db->order_by('sales.tgl_input', 'ASC');
 
@@ -124,6 +131,9 @@ class SalesModel extends CI_Model
     }
     if ($brand_id != "") {
       $this->db->where("sales.brand_id = $brand_id");
+    }
+    if ($divisi_id != "") {
+      $this->db->where("sales.divisi_id = $divisi_id");
     }
     if ($area_id != "") {
       $this->db->where("sales.area_id = $area_id");

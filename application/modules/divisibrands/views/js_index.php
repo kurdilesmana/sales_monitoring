@@ -18,22 +18,12 @@
         [0, 'asc']
       ], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
       "ajax": {
-        "url": "<?php echo base_url('sales/view') ?>", // URL file untuk proses select datanya
+        "url": "<?php echo base_url('divisibrands/view') ?>", // URL file untuk proses select datanya
         "type": "POST"
       },
       "deferRender": true,
       "columns": [{
-          "data": "tgl"
-        }, {
-          "data": "brand"
-        },{
-          "data": "divisi"
-        }, {
-          "data": "area"
-        }, {
-          "data": "omset"
-        }, {
-          "data": "quantity"
+          "data": "name"
         },
         {
           sWidth: "17%",
@@ -53,8 +43,8 @@
     });
     $('#myTable').on('click', 'tbody .delete_btn', function() {
       var data_row = tabel.row($(this).closest('tr')).data();
-      var id_sales = data_row['id'];
-      $(".modal-header #id_sales").val(id_sales);
+      var id_divisi = data_row['id'];
+      $(".modal-header #id_divisi").val(id_divisi);
       $('#modalHapus').modal('show');
     });
   });

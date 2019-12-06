@@ -19,6 +19,24 @@
         },
       }
     });
+    $('#selectDivisi').select2({
+      placeholder: 'Pilih Divisi',
+      ajax: {
+        dataType: 'json',
+        url: '<?php echo base_url('divisibrands/searchDivisi'); ?>',
+        delay: 250,
+        data: function(params) {
+          return {
+            q: params.term,
+          }
+        },
+        processResults: function(data, page) {
+          return {
+            results: data
+          };
+        },
+      }
+    });
     $('#selectArea').select2({
       placeholder: 'Pilih Area',
       ajax: {

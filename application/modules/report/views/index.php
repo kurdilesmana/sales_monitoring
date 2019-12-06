@@ -43,6 +43,11 @@
                     </select>
                   </div>
                   <div class="col-md-4">
+                    <label for="divisi_id" class="control-label">Divisi</label>
+                    <select id="selectDivisi" class="form-control select2 select2-hidden-accessible" name="divisi_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    </select>
+                  </div>
+                  <div class="col-md-4">
                     <label for="area_id" class="control-label">Area</label>
                     <select id="selectArea" class="form-control select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                     </select>

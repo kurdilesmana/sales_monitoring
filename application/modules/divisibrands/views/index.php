@@ -5,7 +5,7 @@
               <i class="fa fa-user"></i>
               <h3 class="box-title"><?php echo $caption ?></h3>
               <div class="box-tools">
-                <a href="<?php echo base_url(); ?>sales/add" type="button" class="btn btn-block btn-default pull-right">Tambah Sales</a>
+                <a href="<?php echo base_url(); ?>divisibrands/add" type="button" class="btn btn-block btn-default pull-right">Tambah Brands</a>
               </div>
             </div>
             <!-- /.box-header -->
@@ -19,12 +19,7 @@
               <table id="myTable" class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th>Tanggal</th>
-                    <th>Brands</th>
-                    <th>Divisi</th>
-                    <th>Area</th>
-                    <th>Omset</th>
-                    <th>Quantity</th>
+                    <th>Nama Divisi</th>
                     <th>Opsi</th>
                   </tr>
                 </thead>
@@ -34,18 +29,18 @@
           </div>
           <!-- /.box -->
         </div>
-        <!-- /.col -->
         <div class="modal fade" id="modalHapus">
           <div class="modal-dialog">
-            <form action="<?php echo base_url('sales/delete') ?>" method="post" accept-charset="utf-8">
+            <form action="<?php echo base_url('divisibrands/delete') ?>" method="post" accept-charset="utf-8">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title">Yakin menghapus data ini?!</h4>
-                  <input type="text" name="id_sales" id="id_sales" value="" hidden>
+                  <input type="text" name="id_divisi" id="id_divisi" value="" hidden>
                 </div>
-                <!-- <div class="modal-body"></div> -->
+                <!-- <div class="modal-body"></p>
+                </div> -->
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-danger">Hapus!</button>
@@ -57,4 +52,5 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        <!-- /.col -->
       </div>

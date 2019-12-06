@@ -38,6 +38,7 @@ class Report extends MY_Controller
 			$tgl_awal = $this->input->post('tgl_awal', TRUE);
 			$tgl_akhir = $this->input->post('tgl_akhir', TRUE);
 			$brand_id = $this->input->post('brand_id', TRUE);
+			$divisi_id = $this->input->post('divisi_id', TRUE);
 			$area_id = $this->input->post('area_id', TRUE);
 
 			// get data via model
@@ -45,6 +46,7 @@ class Report extends MY_Controller
 				'tgl_awal' => $tgl_awal,
 				'tgl_akhir' => $tgl_akhir,
 				'brand_id' => $brand_id,
+				'divisi_id' => $divisi_id,
 				'area_id' => $area_id
 			));
 
@@ -70,6 +72,7 @@ class Report extends MY_Controller
 			$pdf->SetFont('Arial', 'B', 10);
 			$pdf->Cell(40, 6, "Tanggal Input", 1, 0, 'C');
 			$pdf->Cell(40, 6, "Brands", 1, 0, 'C');
+			$pdf->Cell(40, 6, "Divisi", 1, 0, 'C');
 			$pdf->Cell(40, 6, "Area", 1, 0, 'C');
 			$pdf->Cell(40, 6, "Omset", 1, 0, 'C');
 			$pdf->Cell(20, 6, "Quantity", 1, 1, 'C');
@@ -77,6 +80,7 @@ class Report extends MY_Controller
 			foreach ($salesData as $s) {
 				$pdf->Cell(40, 6, date('d/m/Y', strtotime($s['tgl_input'])), 1, 0, 'C');
 				$pdf->Cell(40, 6, $s['brand'], 1, 0);
+				$pdf->Cell(40, 6, $s['divisi'], 1, 0);
 				$pdf->Cell(40, 6, $s['area'], 1, 0);
 				$pdf->Cell(40, 6, $s['omset'], 1, 0);
 				$pdf->Cell(20, 6, $s['quantity'], 1, 1);
