@@ -46,7 +46,7 @@
           sWidth: "15%",
           "render": function(data, type, row) { // Tampilkan kolom aksi
             var html = "<button class='btn btn-sm btn-default edit_btn'><i class='fa fa-edit'></i> Edit</button>"
-            html += " | <button class='btn btn-sm btn-danger' data-toggle='modal' data-target='#modalHapus'><i class='fa fa-trash'></i> Hapus</button>"
+            html += " | <button class='btn btn-sm btn-danger delete_btn'><i class='fa fa-trash'></i> Hapus</button>"
             return html
           }
         },
@@ -54,9 +54,15 @@
     });
     $('#myTable').on('click', 'tbody .edit_btn', function() {
       var data_row = tabel.row($(this).closest('tr')).data();
-      $.redirect('<?php echo base_url() . $this->router->class . '/update'; ?>', {
+      $.redirect('<?php echo base_url() . $this->router->class . '/updatesubmenu'; ?>', {
         'id': data_row['id']
       }, 'GET');
+    });
+    $('#myTable').on('click', 'tbody .delete_btn', function() {
+      var data_row = tabel.row($(this).closest('tr')).data();
+      var id_menu = data_row['id'];
+      $(".modal-header #id_menu").val(id_menu);
+      $('#modalHapus').modal('show');
     });
   });
 </script>

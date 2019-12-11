@@ -7,7 +7,7 @@
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form class="form-horizontal" action="<?php echo base_url() . 'brands/update?id=' . $lists['id_brands']; ?>" method="post">
+      <form class="form-horizontal" action="<?php echo base_url() . 'brands/update'; ?>" method="post">
         <div class="box-body">
           <?php if (isset($error)) { ?>
             <div class="alert alert-danger alert-dismissible" style="margin-top: 3px">

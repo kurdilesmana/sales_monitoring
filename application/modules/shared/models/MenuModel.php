@@ -102,40 +102,34 @@ class MenuModel extends CI_Model
 
   public function updateData($data = array())
   {
-    $id       = $data["id"];
-    $name     = $data["name"];
-    $username = $data["username"];
-    $password = $data["password"];
-    $role     = $data["role"];
+    $id_menu = $data["id_menu"];
+    $header_menu = $data["header_menu"];
 
-    $oldPass   = $thisUserPass['password'];
-    $oldUserid = $thisUserPass['username'];
-
-    if ($username != $oldUserid) {
-      $check = $this->__checkUserId($username);
-      if ($check > 0) {
-        return 'exist';
-      }
-    }
-
-    if ($password) {
-      $sql_user = "name = '" . $this->db->escape_str($name) . "', username = '" . $this->db->escape_str($username) . "', role = '" . $this->db->escape_str($role) . "', password = '" . $this->db->escape_str(md5($password)) . "'";
-    } else {
-      $sql_user = "name = '" . $this->db->escape_str($name) . "', username = '" . $this->db->escape_str($username) . "', role = '" . $this->db->escape_str($role) . "'";
-    }
+    $sql_user = "header_menu = '" . $this->db->escape_str($header_menu) . "'";
 
     $doUpdate = $this->db->query("
-    UPDATE " . $this->_table . "
-    SET 
-      " . $sql_user . "
-    WHERE 
-      id_user = " . $id . "
+      UPDATE " . $this->_table . "
+      SET 
+        " . $sql_user . "
+      WHERE 
+        id = " . $id_menu . "
     ");
 
     if ($doUpdate) {
       return 'success';
     } else {
       return 'failed';
+    }
+  }
+
+  public function deleteData($id)
+  {
+    $doDelete = $this->db->delete($this->_table, array('id' => $id));
+
+    if (!$doDelete) {
+      return 'failed';
+    } else {
+      return 'success';
     }
   }
 
@@ -149,10 +143,94 @@ class MenuModel extends CI_Model
     }
   }
 
+  public function updateDataSub($data)
+  {
+    $id = $data['id'];
+    $header_id = $data['header_id'];
+    $title = $data['title'];
+    $url = $data['url'];
+    $icon = $data['icon'];
+    $no_order = $data['no_order'];
+    $parent_id = $data['parent_id'];
+    $is_active = $data['is_active'];
+
+    $sql_user = "
+      header_id = " . $this->db->escape_str($header_id) . ",
+      title = '" . $this->db->escape_str($title) . "',
+      url = '" . $this->db->escape_str($url) . "',
+      icon = '" . $this->db->escape_str($icon) . "',
+      no_order = " . $this->db->escape_str($no_order) . ",
+      parent_id = '" . $this->db->escape_str($parent_id) . "',
+      is_active = " . $this->db->escape_str($is_active) . "
+    ";
+
+    $doUpdate = $this->db->query("
+      UPDATE " . $this->_tableSub . "
+      SET 
+        " . $sql_user . "
+      WHERE 
+        id = " . $id . "
+    ");
+
+    if ($doUpdate) {
+      return 'success';
+    } else {
+      return 'failed';
+    }
+  }
+
+  public function deleteDataSub($id)
+  {
+    $doDelete = $this->db->delete($this->_tableSub, array('id' => $id));
+
+    if (!$doDelete) {
+      return 'failed';
+    } else {
+      return 'success';
+    }
+  }
+
   public function entriDataAccess($data = array())
   {
     $addAccessMenu  = $this->db->insert($this->_tableAccess, $data);
     if (!$addAccessMenu) {
+      return 'failed';
+    } else {
+      return 'success';
+    }
+  }
+
+  public function updateDataAccess($data)
+  {
+    $id = $data['id'];
+    $menu_id = $data['menu_id'];
+    $role_id = $data['role_id'];
+
+    $sql_user = "
+      menu_id = " . $this->db->escape_str($menu_id) . ",
+      role_id = '" . $this->db->escape_str($role_id) . "'
+    ";
+
+    $doUpdate = $this->db->query("
+      UPDATE " . $this->_tableAccess . "
+      SET 
+        " . $sql_user . "
+      WHERE 
+        id = " . $id . "
+    ");
+
+    if ($doUpdate) {
+      return 'success';
+    } else {
+      return 'failed';
+    }
+  }
+
+  public function deleteDataAccess($id)
+  {
+    $doDelete = $this->db->delete($this->_tableAccess, array('id' => $id));
+
+    if (!$doDelete) {
       return 'failed';
     } else {
       return 'success';

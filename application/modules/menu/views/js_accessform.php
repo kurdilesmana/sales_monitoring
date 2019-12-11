@@ -2,20 +2,20 @@
 	$(document).ready(function() {
 		// Set Selected data
 		<?php
-			if (isset($lists['menu'])) {
-				$menuID = $lists['menu'];
-				$query = "SELECT * FROM user_menu WHERE id = $menuID";
-				$menu = $this->db->query($query)->result_array(); ?>
-				
-				<?php foreach ($menu as $m) { ?>
+		if (isset($lists['menu_id'])) {
+			$menuID = $lists['menu_id'];
+			$query = "SELECT * FROM user_menu WHERE id = $menuID";
+			$menu = $this->db->query($query)->result_array(); ?>
+
+			<?php foreach ($menu as $m) { ?>
 				$('#menu_id').select2({
 					data: [{
 						id: '<?= $m['id'] ?>',
 						text: '<?= $m['title'] ?>'
 					}]
 				});
-				<?php 
-			} 
+		<?php
+			}
 		}
 		?>
 		$('#menu_id').select2({
@@ -36,22 +36,22 @@
 				},
 			}
 		});
-    // Set Selected data
+		// Set Selected data
 		<?php
-			if (isset($lists['role'])) {
-				$roleID = $lists['role'];
-				$query = "SELECT * FROM user_role WHERE id = $roleID";
-				$role = $this->db->query($query)->result_array(); ?>
-				
-				<?php foreach ($role as $r) { ?>
+		if (isset($lists['role_id'])) {
+			$roleID = $lists['role_id'];
+			$query = "SELECT * FROM user_role WHERE id = $roleID";
+			$role = $this->db->query($query)->result_array(); ?>
+
+			<?php foreach ($role as $r) { ?>
 				$('#role_id').select2({
 					data: [{
 						id: '<?= $r['id'] ?>',
 						text: '<?= $r['name'] ?>'
 					}]
 				});
-				<?php 
-			} 
+		<?php
+			}
 		}
 		?>
 		$('#role_id').select2({

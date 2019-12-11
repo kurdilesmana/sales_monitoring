@@ -158,7 +158,7 @@ class Menu extends MY_Controller
 					$tdata['error'] = 'Data tidak bisa ditambahkan!';
 				} else {
 					$this->session->set_flashdata('success', 'Berhasil disimpan');
-					redirect(base_url() . 'users');
+					redirect(base_url() . 'menu');
 				}
 			}
 		}
@@ -168,7 +168,75 @@ class Menu extends MY_Controller
 		$this->load->sharedView('base', $ldata);
 	}
 
-	function addSubmenu()
+	function update()
+	{
+		$tdata['title'] = 'Header Menu';
+		$tdata['caption'] = 'Ubah Header Menu';
+
+		$id = intval($_GET['id']);
+		if (!isset($id)) redirect(base_url() . 'menu');
+
+		if ($_POST) {
+			//set form validation
+			$this->form_validation->set_rules('header_menu', 'Menu', 'required');
+
+			//set message form validation
+			$this->form_validation->set_message('required', '{field} harus diisi.');
+
+			//cek validasi
+			if ($this->form_validation->run() == TRUE) {
+				//get data dari FORM
+				$id_menu = $this->input->post("id_menu", TRUE);
+				$header_menu = $this->input->post("header_menu", TRUE);
+
+				//insert data via model
+				$doUpdate = $this->MenuModel->updateData(array(
+					'id_menu' => $id_menu,
+					'header_menu' => $header_menu
+				));
+
+				//Pengecekan input data user
+				if ($doUpdate == 'failed') {
+					$tdata['error'] = 'Data tidak bisa ditambahkan!';
+				} else {
+					$this->session->set_flashdata('success', 'Berhasil disimpan');
+					redirect(base_url() . 'menu');
+				}
+			}
+		}
+
+		## GET USER ##
+		$menuData = $this->MenuModel->getById($id);
+		$tdata['lists'] = array(
+			'id_menu' => $menuData->id,
+			'header_menu' => $menuData->header_menu,
+		);
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/form_update', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function delete()
+	{
+		$id_menu = $this->input->post("id_menu", TRUE);
+
+		$doDelete = $this->MenuModel->deleteData($id_menu);
+
+		if ($doDelete == 'failed') {
+			$tdata['error'] = 'Data gagal dihapus!';
+		} else {
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect(base_url() . 'menu');
+		}
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function addSubMenu()
 	{
 		$tdata['title'] = 'Menu';
 		$tdata['caption'] = 'Tambah Data Menu';
@@ -215,6 +283,89 @@ class Menu extends MY_Controller
 		$this->load->sharedView('base', $ldata);
 	}
 
+	function updateSubMenu()
+	{
+		$tdata['title'] = 'Menu';
+		$tdata['caption'] = 'Ubah Menu';
+
+		$id = intval($_GET['id']);
+		if (!isset($id)) redirect(base_url() . 'menu/submenu');
+
+		if ($_POST) {
+			//set form validation
+			$this->form_validation->set_rules('header_id', 'Menu', 'required');
+			$this->form_validation->set_rules('title', 'Title', 'required');
+			$this->form_validation->set_rules('url', 'URL', 'required');
+			$this->form_validation->set_rules('icon', 'Icon', 'required');
+			$this->form_validation->set_rules('no_order', 'Nomor Order', 'required');
+
+			//set message form validation
+			$this->form_validation->set_message('required', '{field} harus diisi.');
+
+			//cek validasi
+			if ($this->form_validation->run() == TRUE) {
+				//get data dari FORM
+				$data = [
+					'id' => $this->input->post('id', TRUE),
+					'header_id' => $this->input->post('header_id', TRUE),
+					'title' => htmlspecialchars($this->input->post("title", TRUE)),
+					'url' => htmlspecialchars($this->input->post("url", TRUE)),
+					'icon' => htmlspecialchars($this->input->post("icon", TRUE)),
+					'no_order' => htmlspecialchars($this->input->post("no_order", TRUE)),
+					'parent_id' => $this->input->post('parent_id'),
+					'is_active' => $this->input->post('is_active', TRUE),
+				];
+
+				//insert data via model
+				$doUpdate = $this->MenuModel->updateDataSub($data);
+
+				//Pengecekan input data user
+				if ($doUpdate == 'failed') {
+					$tdata['error'] = 'Data tidak bisa ditambahkan!';
+				} else {
+					$this->session->set_flashdata('success', 'Berhasil disimpan');
+					redirect(base_url() . 'menu/submenu');
+				}
+			}
+		}
+
+		$menuData = $this->MenuModel->getByIdSub($id);
+		$tdata['lists'] = array(
+			'id' => $menuData->id,
+			'header_id' => $menuData->header_id,
+			'title' => $menuData->title,
+			'url' => $menuData->url,
+			'icon' => $menuData->icon,
+			'no_order' => $menuData->no_order,
+			'parent_id' => $menuData->parent_id,
+			'is_active' => $menuData->is_active
+		);
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/subform_update', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_subform', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function deleteSub()
+	{
+		$id_menu = $this->input->post("id_menu", TRUE);
+
+		$doDelete = $this->MenuModel->deleteDataSub($id_menu);
+
+		if ($doDelete == 'failed') {
+			$tdata['error'] = 'Data gagal dihapus!';
+		} else {
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect(base_url() . 'menu/submenu');
+		}
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
 	function addAccessmenu()
 	{
 		$tdata['title'] = 'Access Menu';
@@ -252,6 +403,76 @@ class Menu extends MY_Controller
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/accessform_add', $tdata, true);
 		$ldata['script'] = $this->load->view($this->router->class . '/js_accessform', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function updateAccessMenu()
+	{
+		$tdata['title'] = 'Access Menu';
+		$tdata['caption'] = 'Ubah Access Menu';
+
+		$id = intval($_GET['id']);
+		if (!isset($id)) redirect(base_url() . 'menu/accessMenu');
+
+		if ($_POST) {
+			//set form validation
+			$this->form_validation->set_rules('menu_id', 'Menu', 'required');
+			$this->form_validation->set_rules('role_id', 'Role', 'required');
+
+			//set message form validation
+			$this->form_validation->set_message('required', '{field} harus diisi.');
+
+			//cek validasi
+			if ($this->form_validation->run() == TRUE) {
+				//get data dari FORM
+				$data = [
+					'id' => $this->input->post('id', TRUE),
+					'menu_id' => $this->input->post("menu_id", TRUE),
+					'role_id' => $this->input->post("role_id", TRUE)
+				];
+
+				//insert data via model
+				$doUpdate = $this->MenuModel->updateDataAccess($data);
+
+				//Pengecekan input data user
+				if ($doUpdate == 'failed') {
+					$tdata['error'] = 'Data tidak bisa ditambahkan!';
+				} else {
+					$this->session->set_flashdata('success', 'Berhasil disimpan');
+					redirect(base_url() . 'menu/accessMenu');
+				}
+			}
+		}
+
+		$accessData = $this->MenuModel->getByIdAccess($id);
+		$tdata['lists'] = array(
+			'id' => $accessData->id,
+			'menu_id' => $accessData->menu_id,
+			'role_id' => $accessData->role_id
+		);
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/accessform_update', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_accessform', $tdata, true);
+		$this->load->sharedView('base', $ldata);
+	}
+
+	function deleteAccess()
+	{
+		$id_access = $this->input->post("id_access", TRUE);
+
+		$doDelete = $this->MenuModel->deleteDataAccess($id_access);
+
+		if ($doDelete == 'failed') {
+			$tdata['error'] = 'Data gagal dihapus!';
+		} else {
+			$this->session->set_flashdata('success', 'Data berhasil dihapus');
+			redirect(base_url() . 'menu/accessmenu');
+		}
+
+		## LOAD LAYOUT ##	
+		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
+		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 		$this->load->sharedView('base', $ldata);
 	}
 }
