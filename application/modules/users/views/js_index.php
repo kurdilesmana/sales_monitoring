@@ -24,10 +24,13 @@
       "deferRender": true,
       "columns": [{
           "data": "name"
-        }, // Tampilkan nama
+        },
         {
           "data": "email"
-        }, // Tampilkan username
+        },
+        {
+          "data": "brand"
+        },
         {
           "render": function(data, type, row) { // Tampilkan role
             var role = ""

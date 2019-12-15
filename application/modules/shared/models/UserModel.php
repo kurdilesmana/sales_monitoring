@@ -10,11 +10,17 @@ class UserModel extends CI_Model
 
   public function filter($search, $limit, $start, $order_field, $order_ascdesc)
   {
-    $this->db->like('name', $search); // Untuk menambahkan query where LIKE
-    $this->db->or_like('email', $search); // Untuk menambahkan query where OR LIKE
-    $this->db->order_by($order_field, $order_ascdesc); // Untuk menambahkan query ORDER BY
-    $this->db->limit($limit, $start); // Untuk menambahkan query LIMIT
-    return $this->db->get($this->_table)->result_array(); // Eksekusi query sql sesuai kondisi diatas
+    $this->db->like('users.name', $search);
+    $this->db->or_like('email', $search);
+    $this->db->order_by($order_field, $order_ascdesc);
+    $this->db->limit($limit, $start);
+    $this->db->select(
+      'COALESCE(brands.name, "undefined") as brand,
+      users.*'
+    );
+    $this->db->from($this->_table);
+    $this->db->join('brands', 'brands.id=users.brand_id', 'left');
+    return $this->db->get()->result_array();
   }
 
   public function getById($id)
@@ -24,29 +30,29 @@ class UserModel extends CI_Model
 
   public function getByEmail($email)
   {
+    $this->db->select(
+      'COALESCE(brands.name, "undefined") as brand,
+      users.*'
+    );
+    $this->db->join('brands', 'brands.id=users.brand_id', 'left');
     return $this->db->get_where($this->_table, ["email" => $email])->row();
   }
 
   public function count_all()
   {
-    return $this->db->count_all($this->_table); // Untuk menghitung semua data users
+    return $this->db->count_all($this->_table);
   }
 
   public function count_filter($search)
   {
-    $this->db->like('name', $search); // Untuk menambahkan query where LIKE
-    $this->db->or_like('email', $search); // Untuk menambahkan query where OR LIKE
-    return $this->db->get($this->_table)->num_rows(); // Untuk menghitung jumlah data sesuai dengan filter pada textbox pencarian
+    $this->db->like('users.name', $search);
+    $this->db->or_like('email', $search);
+    return $this->db->get($this->_table)->num_rows();
   }
 
   public function entriData($data = array())
   {
-    $name     = $data["name"];
-    $email    = $data["email"];
-    $password = $data["password"];
-    $role_id  = $data["role_id"];
-
-    $check = $this->__checkUserId($email);
+    $check = $this->__checkUserId($data['email']);
     if ($check > 0) {
       return 'exist';
     } else {
@@ -61,13 +67,12 @@ class UserModel extends CI_Model
     $name     = $data["name"];
     $email    = $data["email"];
     $password = $data["password"];
+    $brand_id  = $data["brand_id"];
     $role_id  = $data["role_id"];
 
     $thisUserPass = $this->__getUserPassword(array('id' => $id));
 
-    $oldPass   = $thisUserPass['password'];
     $oldUserid = $thisUserPass['email'];
-
     if ($email != $oldUserid) {
       $check = $this->__checkUserId($email);
       if ($check > 0) {
@@ -76,9 +81,9 @@ class UserModel extends CI_Model
     }
 
     if ($password) {
-      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', role_id = '" . $this->db->escape_str($role_id) . "', password = '" . $this->db->escape_str(password_hash(($password), PASSWORD_DEFAULT)) . "'";
+      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', brand_id = '" . $this->db->escape_str($brand_id) . "', role_id = '" . $this->db->escape_str($role_id) . "', password = '" . $this->db->escape_str(password_hash(($password), PASSWORD_DEFAULT)) . "'";
     } else {
-      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', role_id = '" . $this->db->escape_str($role_id) . "'";
+      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', brand_id = '" . $this->db->escape_str($brand_id) . "',role_id = '" . $this->db->escape_str($role_id) . "'";
     }
 
     $doUpdate = $this->db->query("

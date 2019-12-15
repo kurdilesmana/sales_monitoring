@@ -34,7 +34,6 @@
     <div class="nav-tabs-custom" id="tabs">
       <ul class="nav nav-tabs">
         <li><a href="#fullProfile" data-toggle="tab">Full Profile</a></li>
-        <li><a href="#editProfile" data-toggle="tab">Edit Profile</a></li>
       </ul>
       <div class="tab-content">
         <div class="active tab-pane" id="fullProfile">
@@ -67,33 +66,6 @@
         </div>
         <!-- /.tab-pane -->
       </div>
-      <!-- /.tab-content -->
-      <div class="tab-content">
-        <div class="tab-pane" id="editProfile">
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label for="inputName" class="col-sm-2 control-label">Name</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="inputName" placeholder="Name" value="<?php echo isset($lists) ? $lists['name'] : set_value('name'); ?>">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-              <div class="col-sm-6">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="<?php echo isset($lists) ? $lists['email'] : set_value('email'); ?>">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputEmail" class="col-sm-2 control-label">Brands</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="<?php echo isset($lists) ? $lists['brand'] : set_value('brand'); ?>">
-              </div>
-            </div>
-          </form>
-        </div>
-        <!-- /.tab-pane -->
-      </div>
-      <!-- /.tab-content -->
     </div>
     <!-- /.nav-tabs-custom -->
   </div>

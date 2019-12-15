@@ -21,6 +21,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Brand</th>
                     <th>Role</th>
                     <th>Opsi</th>
                   </tr>

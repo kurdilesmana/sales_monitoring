@@ -38,12 +38,21 @@
                 </div>
                 <span class="help-block"><?php echo form_error('email'); ?></span>
               </div>
-              <div class="form-group">
-                <label for="role" class="col-sm-3 control-label">Role</label>
+              <div class="form-group <?= form_error('brand_id') ? 'has-error' : '' ?>">
+                <label for="brand_id" class="col-sm-3 control-label">Brand</label>
                 <div class="col-sm-6">
-                  <select id="selectRole" class="form-control select2 select2-hidden-accessible" name="role" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                   </select>
                 </div>
+                <span class="help-block"><?php echo form_error('brand_id'); ?></span>
+              </div>
+              <div class="form-group <?= form_error('role_id') ? 'has-error' : '' ?>">
+                <label for="role_id" class="col-sm-3 control-label">Role</label>
+                <div class="col-sm-6">
+                  <select id="selectRole" class="form-control select2 select2-hidden-accessible" name="role_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                  </select>
+                </div>
+                <span class="help-block"><?php echo form_error('role_id'); ?></span>
               </div>
             </div>
             <div class="col-md-6">

@@ -37,6 +37,7 @@ class Users extends MY_Controller
 			$this->form_validation->set_rules('name', 'Nama', 'required');
 			$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
 			$this->form_validation->set_rules('role_id', 'Role', 'required');
+			$this->form_validation->set_rules('brand_id', 'Brand', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[5]');
 			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'trim|required|matches[password]');
 
@@ -52,6 +53,7 @@ class Users extends MY_Controller
 					'name' => htmlspecialchars($this->input->post("name", TRUE)),
 					'email' => htmlspecialchars($this->input->post("email", TRUE)),
 					'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+					'brand_id' => $this->input->post('brand_id', TRUE),
 					'role_id' => $this->input->post('role_id', TRUE),
 				];
 
@@ -88,6 +90,8 @@ class Users extends MY_Controller
 			//set form validation
 			$this->form_validation->set_rules('name', 'Nama', 'trim|required');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+			$this->form_validation->set_rules('brand_id', 'Brand', 'required');
+			$this->form_validation->set_rules('role_id', 'Role', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]');
 			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'trim|matches[password]');
 
@@ -104,6 +108,7 @@ class Users extends MY_Controller
 				$name = $this->input->post("name", TRUE);
 				$email = $this->input->post("email", TRUE);
 				$password = $this->input->post("password", TRUE);
+				$brand_id = $this->input->post('brand_id', TRUE);
 				$role_id = $this->input->post('role_id', TRUE);
 
 				//insert data via model
@@ -112,6 +117,7 @@ class Users extends MY_Controller
 					'name' => $name,
 					'email' => $email,
 					'password' => $password,
+					'brand_id' => $brand_id,
 					'role_id' => $role_id,
 				));
 
@@ -131,6 +137,7 @@ class Users extends MY_Controller
 			'id' => $userData->id,
 			'name' => $userData->name,
 			'email' => $userData->email,
+			'brand_id' => $userData->brand_id,
 			'role_id' => $userData->role_id
 		);
 
@@ -192,7 +199,7 @@ class Users extends MY_Controller
 			'id' => $userData->id,
 			'name' => $userData->name,
 			'email' => $userData->email,
-			'brand' => $userData->brand_id,
+			'brand' => $userData->brand,
 			'date_created' => $userData->date_created
 		);
 

@@ -9,21 +9,15 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <?php if ($this->session->flashdata('success')) { ?>
-                <div class="alert alert-success alert-dismissible" style="margin-top: 3px">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                  <div class="header"><b><i class="fa fa-check"></i> SUCCESS</b> <?php echo $this->session->flashdata('success'); ?></div>
-                </div>
-              <?php } ?>
-              <form method="post" action=" <?php echo base_url() . 'report/printPDF'; ?>">
-                <div class=" form-group col-md-12">
+              <form method="post" id="form-report" action=" <?php echo base_url() . 'report/printPDF'; ?>">
+                <div class="form-group col-md-12">
                   <div class="col-md-4">
                     <label for="tgl_input">Tanggal Awal</label>
                     <div class="input-group date">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" class="form-control" id="tgl_awal" name="tgl_awal" placeholder="Tanggal Awal">
+                      <input type="text" class="form-control" id="tgl_awal" name="tgl_awal" placeholder="Tanggal Awal" value="<?= set_value('tgl_awal') ?>">
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -32,7 +26,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" class="form-control" id="tgl_akhir" name="tgl_akhir" placeholder="Tanggal Akhir">
+                      <input type="text" class="form-control" id="tgl_akhir" name="tgl_akhir" placeholder="Tanggal Akhir" value="<?= set_value('tgl_awal') ?>">
                     </div>
                   </div>
                 </div>
@@ -55,10 +49,37 @@
                 </div>
                 <div class="form-group col-md-12">
                   <div class="col-md-4">
-                    <button type="submit" class="btn btn-info">Cetak</button>
+                    <button type="button" id="btn-search" class="btn btn-info">Search</button>
+                    <button type="button" id="btn-cetak" class="btn btn-info">Cetak</button>
                   </div>
                 </div>
               </form>
+              <table id="myTable" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Brands</th>
+                    <th>Divisi</th>
+                    <th>Area</th>
+                    <th>Omset</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if (isset($lists)) {
+                    foreach ($lists as $l) { ?>
+                      <tr>
+                        <td><?= $l['tgl'] ?></td>
+                        <td><?= $l['brand'] ?></td>
+                        <td><?= $l['divisi'] ?></td>
+                        <td><?= $l['area'] ?></td>
+                        <td><?= $l['omset'] ?></td>
+                        <td><?= $l['quantity'] ?></td>
+                      </tr>
+                  <?php }
+                  } ?>
+                </tbody>
+              </table>
             </div>
             <!-- /.box-body -->
           </div>

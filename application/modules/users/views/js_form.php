@@ -18,6 +18,25 @@
 			}
 		}
 		?>
+
+		<?php
+		if (isset($lists['brand_id'])) {
+			$brandID = $lists['brand_id'];
+			$query = "SELECT * FROM brands WHERE id = $brandID";
+			$brand = $this->db->query($query)->result_array(); ?>
+
+			<?php foreach ($brand as $r) { ?>
+				$('#selectBrands').select2({
+					data: [{
+						id: '<?= $r['id'] ?>',
+						text: '<?= $r['name'] ?>'
+					}]
+				});
+		<?php
+			}
+		}
+		?>
+
 		$('#selectRole').select2({
 			placeholder: 'Pilih Role',
 			ajax: {
