@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2019 at 11:05 AM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.1.32
+-- Waktu pembuatan: 17 Des 2019 pada 10.36
+-- Versi server: 10.1.31-MariaDB
+-- Versi PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `area`
+-- Struktur dari tabel `area`
 --
 
 CREATE TABLE `area` (
@@ -34,18 +34,17 @@ CREATE TABLE `area` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `area`
+-- Dumping data untuk tabel `area`
 --
 
 INSERT INTO `area` (`id`, `name`) VALUES
 (1, 'Promo'),
-(3, 'Lantai GF'),
-(4, 'Foodcourt');
+(2, 'Atrium');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brands`
+-- Struktur dari tabel `brands`
 --
 
 CREATE TABLE `brands` (
@@ -54,17 +53,38 @@ CREATE TABLE `brands` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `brands`
+-- Dumping data untuk tabel `brands`
 --
 
 INSERT INTO `brands` (`id`, `name`) VALUES
-(2, 'Puma'),
-(4, 'Under Armor');
+(3, 'Cardinal'),
+(4, 'Kickers');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sales`
+-- Struktur dari tabel `divisibrands`
+--
+
+CREATE TABLE `divisibrands` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `divisibrands`
+--
+
+INSERT INTO `divisibrands` (`id`, `name`) VALUES
+(2, 'Mans Shoes'),
+(4, 'Kids Shoes'),
+(5, 'Ladies Wear'),
+(6, 'Mens Wear');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `sales`
 --
 
 CREATE TABLE `sales` (
@@ -72,22 +92,26 @@ CREATE TABLE `sales` (
   `tgl_input` date NOT NULL,
   `area_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
+  `divisi_id` int(11) NOT NULL,
   `omset` double NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `sales`
+-- Dumping data untuk tabel `sales`
 --
 
-INSERT INTO `sales` (`id`, `tgl_input`, `area_id`, `brand_id`, `omset`, `quantity`) VALUES
-(5, '2019-10-29', 3, 4, 1000, 12),
-(6, '2019-10-31', 4, 2, 150, 12);
+INSERT INTO `sales` (`id`, `tgl_input`, `area_id`, `brand_id`, `divisi_id`, `omset`, `quantity`) VALUES
+(14, '2019-11-25', 1, 3, 2, 1000000, 7),
+(15, '2019-11-01', 1, 3, 2, 1000000, 7),
+(16, '2019-11-02', 2, 3, 5, 2500000, 8),
+(17, '2019-11-03', 1, 3, 2, 1500000, 9),
+(18, '2019-12-04', 1, 3, 2, 500000, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -99,11 +123,11 @@ CREATE TABLE `users` (
   `image` varchar(50) NOT NULL DEFAULT 'default.jpg',
   `role_id` int(11) NOT NULL,
   `is_active` int(1) NOT NULL,
-  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
+  `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `brand_id`, `password`, `image`, `role_id`, `is_active`, `date_created`) VALUES
@@ -113,7 +137,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `brand_id`, `password`, `image`, `ro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_access_menu`
+-- Struktur dari tabel `user_access_menu`
 --
 
 CREATE TABLE `user_access_menu` (
@@ -123,7 +147,7 @@ CREATE TABLE `user_access_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_access_menu`
+-- Dumping data untuk tabel `user_access_menu`
 --
 
 INSERT INTO `user_access_menu` (`id`, `menu_id`, `role_id`) VALUES
@@ -141,12 +165,14 @@ INSERT INTO `user_access_menu` (`id`, `menu_id`, `role_id`) VALUES
 (13, 9, 1),
 (14, 10, 1),
 (15, 11, 1),
-(16, 11, 2);
+(16, 11, 2),
+(17, 12, 1),
+(18, 13, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_header_menu`
+-- Struktur dari tabel `user_header_menu`
 --
 
 CREATE TABLE `user_header_menu` (
@@ -155,7 +181,7 @@ CREATE TABLE `user_header_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_header_menu`
+-- Dumping data untuk tabel `user_header_menu`
 --
 
 INSERT INTO `user_header_menu` (`id`, `header_menu`) VALUES
@@ -165,7 +191,7 @@ INSERT INTO `user_header_menu` (`id`, `header_menu`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_menu`
+-- Struktur dari tabel `user_menu`
 --
 
 CREATE TABLE `user_menu` (
@@ -173,15 +199,15 @@ CREATE TABLE `user_menu` (
   `header_id` int(11) NOT NULL,
   `no_order` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `is_parent` int(1) DEFAULT 0,
+  `is_parent` int(1) DEFAULT '0',
   `parent_id` int(11) DEFAULT NULL,
   `url` varchar(100) NOT NULL,
   `icon` varchar(100) NOT NULL,
-  `is_active` int(1) NOT NULL DEFAULT 1
+  `is_active` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_menu`
+-- Dumping data untuk tabel `user_menu`
 --
 
 INSERT INTO `user_menu` (`id`, `header_id`, `no_order`, `title`, `is_parent`, `parent_id`, `url`, `icon`, `is_active`) VALUES
@@ -195,12 +221,14 @@ INSERT INTO `user_menu` (`id`, `header_id`, `no_order`, `title`, `is_parent`, `p
 (8, 1, 93, 'Access Menu', 0, 5, 'menu/accessmenu', 'fa fa-folder', 1),
 (9, 1, 2, 'Brands', 0, NULL, 'brands', 'fa fa-bookmark', 1),
 (10, 1, 3, 'Area', 0, NULL, 'area', 'fa fa-circle', 1),
-(11, 1, 4, 'Sales', 0, NULL, 'sales', 'fa fa-tags', 1);
+(11, 1, 4, 'Sales', 0, NULL, 'sales', 'fa fa-tags', 1),
+(12, 1, 4, 'Sales Report', 1, NULL, 'report', 'fa fa-file-pdf-o', 1),
+(13, 1, 3, 'Divisi Brands', 0, NULL, 'divisibrands', 'fa fa-bookmark', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_role`
+-- Struktur dari tabel `user_role`
 --
 
 CREATE TABLE `user_role` (
@@ -209,7 +237,7 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user_role`
+-- Dumping data untuk tabel `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `name`) VALUES
@@ -221,101 +249,113 @@ INSERT INTO `user_role` (`id`, `name`) VALUES
 --
 
 --
--- Indexes for table `area`
+-- Indeks untuk tabel `area`
 --
 ALTER TABLE `area`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `brands`
+-- Indeks untuk tabel `brands`
 --
 ALTER TABLE `brands`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sales`
+-- Indeks untuk tabel `divisibrands`
+--
+ALTER TABLE `divisibrands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `sales`
 --
 ALTER TABLE `sales`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_access_menu`
+-- Indeks untuk tabel `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_header_menu`
+-- Indeks untuk tabel `user_header_menu`
 --
 ALTER TABLE `user_header_menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_menu`
+-- Indeks untuk tabel `user_menu`
 --
 ALTER TABLE `user_menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_role`
+-- Indeks untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `area`
+-- AUTO_INCREMENT untuk tabel `area`
 --
 ALTER TABLE `area`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `brands`
+-- AUTO_INCREMENT untuk tabel `brands`
 --
 ALTER TABLE `brands`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `sales`
+-- AUTO_INCREMENT untuk tabel `divisibrands`
 --
-ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `divisibrands`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `sales`
+--
+ALTER TABLE `sales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `user_access_menu`
+-- AUTO_INCREMENT untuk tabel `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `user_header_menu`
+-- AUTO_INCREMENT untuk tabel `user_header_menu`
 --
 ALTER TABLE `user_header_menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `user_menu`
+-- AUTO_INCREMENT untuk tabel `user_menu`
 --
 ALTER TABLE `user_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `user_role`
+-- AUTO_INCREMENT untuk tabel `user_role`
 --
 ALTER TABLE `user_role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
