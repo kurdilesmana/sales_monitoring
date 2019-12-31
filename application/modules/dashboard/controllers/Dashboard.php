@@ -25,16 +25,57 @@ class Dashboard extends MY_Controller
 		$this->db->group_by('bulan');
 		$data = $this->db->get()->result_array();
 
-		$sales = array();
+		$salesQty = array();
 		for ($i = 1; $i <= 12; $i++) {
-			$sales[$i] = 0;
+			$salesQty[$i] = 0;
 			for ($y = 0; $y < count($data); $y++) {
 				if ($data[$y]['bulan'] == $i) {
-					$sales[$i] = intval($data[$y]['jumlah']);
+					$salesQty[$i] = intval($data[$y]['jumlah']);
 				}
 			}
 		}
-		$tdata['sales'] = implode(', ', $sales);
+
+		// get data from database
+		$this->db->select(
+			'b.name area, sum(quantity) as jumlah'
+		);
+		$this->db->from('sales a');
+		$this->db->join('area b', 'b.id=a.area_id', 'inner');
+		$this->db->group_by('area');
+		$areaQty = $this->db->get()->result_array();
+
+		// get data from database
+		$this->db->select(
+			'month(tgl_input) as bulan, sum(omset) as jumlah'
+		);
+		$this->db->from('sales');
+		$this->db->group_by('bulan');
+		$data = $this->db->get()->result_array();
+
+		$salesOmset = array();
+		for ($i = 1; $i <= 12; $i++) {
+			$salesOmset[$i] = 0;
+			for ($y = 0; $y < count($data); $y++) {
+				if ($data[$y]['bulan'] == $i) {
+					$salesOmset[$i] = intval($data[$y]['jumlah']);
+				}
+			}
+		}
+
+		// get data from database
+		$this->db->select(
+			'b.name area, sum(omset) as jumlah'
+		);
+		$this->db->from('sales a');
+		$this->db->join('area b', 'b.id=a.area_id', 'inner');
+		$this->db->group_by('area');
+		$areaOmset = $this->db->get()->result_array();
+
+		// sent to view
+		$tdata['salesQty'] = implode(', ', $salesQty);
+		$tdata['salesOmset'] = implode(', ', $salesOmset);
+		$tdata['areaQty'] = $areaQty;
+		$tdata['areaOmset'] = $areaOmset;
 
 		## LOAD LAYOUT ##	
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);

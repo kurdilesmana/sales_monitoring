@@ -1,8 +1,8 @@
 <script>
 	$(function() {
-		//--------------
-		//- AREA CHART -
-		//--------------
+		//-----------------------
+		//- Area Chart Quantity -
+		//-----------------------
 
 		// Get context with jQuery - using jQuery's .get() method.
 		var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
@@ -19,7 +19,7 @@
 				pointHighlightFill: '#fff',
 				pointHighlightStroke: 'rgba(60,141,188,1)',
 				// data: [28, 48, 40, 19, 86, 27, 90, 10, 80, 50, 70, 60]
-				data: [<?php echo $sales ?>]
+				data: [<?php echo $salesQty ?>]
 			}]
 		}
 
@@ -65,48 +65,25 @@
 		//Create the line chart
 		areaChart.Line(areaChartData, areaChartOptions)
 
-		//-------------
-		//- PIE CHART -
-		//-------------
+		//----------------------
+		//- PIE CHART Quantity -
+		//----------------------
 		// Get context with jQuery - using jQuery's .get() method.
 		var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
 		var pieChart = new Chart(pieChartCanvas)
-		var PieData = [{
-				value: 700,
-				color: '#f56954',
-				highlight: '#f56954',
-				label: 'Chrome'
-			},
-			{
-				value: 500,
-				color: '#00a65a',
-				highlight: '#00a65a',
-				label: 'IE'
-			},
-			{
-				value: 400,
-				color: '#f39c12',
-				highlight: '#f39c12',
-				label: 'FireFox'
-			},
-			{
-				value: 600,
-				color: '#00c0ef',
-				highlight: '#00c0ef',
-				label: 'Safari'
-			},
-			{
-				value: 300,
-				color: '#3c8dbc',
-				highlight: '#3c8dbc',
-				label: 'Opera'
-			},
-			{
-				value: 100,
-				color: '#d2d6de',
-				highlight: '#d2d6de',
-				label: 'Navigator'
-			}
+		var PieData = [
+			<?php
+			$color = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
+			for ($i = 0; $i < count($areaQty); $i++) {
+				$jumlah = $areaQty[$i]['jumlah'];
+				$area = $areaQty[$i]['area'];
+				echo "{
+					value: $jumlah, 
+					color: '$color[$i]', 
+					highlight: '$color[$i]',
+					label: '$area'
+				},";
+			} ?>
 		]
 		var pieOptions = {
 			//Boolean - Whether we should show a stroke on each segment
@@ -135,5 +112,51 @@
 		//Create pie or douhnut chart
 		// You can switch between pie and douhnut using the method below.
 		pieChart.Doughnut(PieData, pieOptions)
+
+		//--------------
+		//- Area Chart Omset -
+		//--------------
+
+		// Get context with jQuery - using jQuery's .get() method.
+		var areaChartCanvas = $('#areaChartOmset').get(0).getContext('2d')
+		// This will get the first returned node in the jQuery collection.
+		var areaChartOmset = new Chart(areaChartCanvas)
+		var areaChartOmsetData = {
+			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			datasets: [{
+				label: 'Digital Goods',
+				fillColor: 'rgba(60,141,188,0.9)',
+				strokeColor: 'rgba(60,141,188,0.8)',
+				pointColor: '#3b8bba',
+				pointStrokeColor: 'rgba(60,141,188,1)',
+				pointHighlightFill: '#fff',
+				pointHighlightStroke: 'rgba(60,141,188,1)',
+				data: [<?php echo $salesOmset ?>]
+			}]
+		}
+
+		//Create the line chart
+		areaChartOmset.Line(areaChartOmsetData, areaChartOptions)
+
+		//----------------------
+		//- PIE CHART Quantity -
+		//----------------------
+		var pieChartCanvas = $('#pieChartOmset').get(0).getContext('2d')
+		var pieChartOmset = new Chart(pieChartCanvas)
+		var PieDataOmset = [
+			<?php
+			$color = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
+			for ($i = 0; $i < count($areaOmset); $i++) {
+				$jumlah = $areaOmset[$i]['jumlah'];
+				$area = $areaOmset[$i]['area'];
+				echo "{
+					value: $jumlah, 
+					color: '$color[$i]', 
+					highlight: '$color[$i]',
+					label: '$area'
+				},";
+			} ?>
+		]
+		pieChartOmset.Doughnut(PieDataOmset, pieOptions)
 	})
 </script>
