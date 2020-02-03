@@ -30,8 +30,9 @@
           "data": "divisi"
         }, {
           "data": "area"
-        }, {
-          "data": "omset"
+        }, {  
+          "data": "omset",
+          "render": $.fn.dataTable.render.number( ',', '.', 2, 'Rp. ' )
         }, {
           "data": "quantity"
         },

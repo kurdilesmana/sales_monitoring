@@ -30,9 +30,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php echo base_url(); ?>dashboard"><b>Sales</b>MS</a>
+    <a href="<?php echo base_url(); ?>dashboard"><b>Sales</b>MS</a><br>
+    <img class="d-block mx-auto mb-4" src="<?= base_url('assets'); ?>/dist/img/ygroup.png" alt="" width="72" height="72">
   </div>
   <!-- /.login-logo -->
+  <!-- <div class="text-center"></div>  -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
     <?php if(isset($error)) { echo $error; }; ?>

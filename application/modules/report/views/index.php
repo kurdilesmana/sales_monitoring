@@ -61,12 +61,14 @@
                     <th>Brands</th>
                     <th>Divisi</th>
                     <th>Area</th>
-                    <th>Omset</th>
+                    <th>Sales</th>
                     <th>Quantity</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php if (isset($lists)) {
+                    $sumOmset = 0;
+                    $sumQty = 0; 
                     foreach ($lists as $l) { ?>
                       <tr>
                         <td><?= $l['tgl'] ?></td>
@@ -75,11 +77,15 @@
                         <td><?= $l['area'] ?></td>
                         <td><?= $l['omset'] ?></td>
                         <td><?= $l['quantity'] ?></td>
-                      </tr>
-                  <?php }
-                  } ?>
+                      </tr>                      
+                    <?php 
+                      $sumOmset += $l['omset']; 
+                      $sumQty += $l['quantity']; 
+                    } ?>
+                <?php } ?>
                 </tbody>
               </table>
+              <p align="right" style="padding-right: 10px">Total Sales : <strong>Rp. <?= number_format($sumOmset,2) ?></strong> | Total Qty : <?= number_format($sumQty,2) ?></p>
             </div>
             <!-- /.box-body -->
           </div>

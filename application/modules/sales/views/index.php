@@ -23,7 +23,7 @@
                     <th>Brands</th>
                     <th>Divisi</th>
                     <th>Area</th>
-                    <th>Omset</th>
+                    <th>Sales</th>
                     <th>Quantity</th>
                     <th>Opsi</th>
                   </tr>

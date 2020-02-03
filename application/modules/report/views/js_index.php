@@ -1,7 +1,16 @@
 <script>
   $(document).ready(function() {
     $('#myTable').dataTable({
-      searching: false
+      "searching": false,
+      "bPaginate": false,
+      "bInfo": false,
+      "aoColumnDefs": [ {
+        "aTargets": [ 4 ],
+        "mRender": function (data, type, full) {
+          var formmatedvalue=data.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          return "Rp. "+formmatedvalue;
+        }
+      }]
     });
 
     $("#btn-search").click(function() {

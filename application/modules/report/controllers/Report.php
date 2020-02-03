@@ -54,6 +54,10 @@ class Report extends MY_Controller
 		$tdata['caption'] = 'Laporan Data Sales';
 
 		if ($_POST) {
+			// sum data omset dan qty
+			$sumOmset = 0;
+			$sumQty = 0;
+
 			//get data dari FORM
 			$tgl_awal = $this->input->post('tgl_awal', TRUE);
 			$tgl_akhir = $this->input->post('tgl_akhir', TRUE);
@@ -75,7 +79,6 @@ class Report extends MY_Controller
 			$pdf->AddPage();
 			$pdf->SetFont('Arial', 'B', 16);
 
-
 			// header laporan
 			$pdf->Cell(190, 7, "LAPORAN DATA SALES", 0, 1, 'C');
 			$pdf->SetFont('Arial', 'B', 12);
@@ -88,7 +91,7 @@ class Report extends MY_Controller
 			}
 
 			// space
-			$pdf->Cell(10, 7, "", 0, 1, 'C',);
+			$pdf->Cell(10, 7, "", 0, 1, 'C');
 			// header tabel
 			$pdf->SetFont('Arial', 'B', 10);
 			$pdf->Cell(30, 6, "Tanggal Input", 1, 0, 'C');
@@ -103,14 +106,21 @@ class Report extends MY_Controller
 				$pdf->Cell(30, 6, $s['brand'], 1, 0);
 				$pdf->Cell(30, 6, $s['divisi'], 1, 0);
 				$pdf->Cell(30, 6, $s['area'], 1, 0);
-				$pdf->Cell(30, 6, $s['omset'], 1, 0);
+				$pdf->Cell(30, 6, number_format($s['omset'], 2), 1, 0);
 				$pdf->Cell(30, 6, $s['quantity'], 1, 1);
+
+				// add sumQty
+				$sumOmset += $s['omset'];
+				$sumQty += $s['quantity'];
 			}
+
+			$textInfo = "Total Omset : ".number_format($sumOmset,2)." | Total Quantity : ".$sumQty;
+			$pdf->Cell(270, 6, $textInfo, 0, 1, 'C');
 
 			$pdf->Output('', "laporan_sales");
 		}
 
-		## LOAD LAYOUT ##	
+		## LOAD LAYOUT ##
 		$ldata['content'] = $this->load->view($this->router->class . '/index', $tdata, true);
 		$ldata['script'] = $this->load->view($this->router->class . '/js_index', $tdata, true);
 	}

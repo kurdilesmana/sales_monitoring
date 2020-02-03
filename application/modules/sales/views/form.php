@@ -52,9 +52,9 @@
             <span class="help-block"><?php echo form_error('area_id'); ?></span>
           </div>
           <div class="form-group <?= form_error('omset') ? 'has-error' : '' ?>">
-            <label for="omset" class="col-sm-3 control-label">Omset</label>
+            <label for="omset" class="col-sm-3 control-label">Sales</label>
             <div class="col-sm-6">
-              <input type="number" class="form-control" name="omset" placeholder="Omset" value="<?php echo isset($lists) ? $lists->omset : set_value('omset'); ?>">
+              <input type="number" class="form-control" name="omset" placeholder="Sales" value="<?php echo isset($lists) ? $lists->omset : set_value('omset'); ?>">
             </div>
             <span class="help-block"><?php echo form_error('omset'); ?></span>
           </div>

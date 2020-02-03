@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Des 2019 pada 10.36
+-- Waktu pembuatan: 20 Jan 2020 pada 02.34
 -- Versi server: 10.1.31-MariaDB
 -- Versi PHP: 7.2.3
 
@@ -97,17 +97,6 @@ CREATE TABLE `sales` (
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `sales`
---
-
-INSERT INTO `sales` (`id`, `tgl_input`, `area_id`, `brand_id`, `divisi_id`, `omset`, `quantity`) VALUES
-(14, '2019-11-25', 1, 3, 2, 1000000, 7),
-(15, '2019-11-01', 1, 3, 2, 1000000, 7),
-(16, '2019-11-02', 2, 3, 5, 2500000, 8),
-(17, '2019-11-03', 1, 3, 2, 1500000, 9),
-(18, '2019-12-04', 1, 3, 2, 500000, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -167,7 +156,8 @@ INSERT INTO `user_access_menu` (`id`, `menu_id`, `role_id`) VALUES
 (15, 11, 1),
 (16, 11, 2),
 (17, 12, 1),
-(18, 13, 1);
+(18, 13, 1),
+(19, 12, 2);
 
 -- --------------------------------------------------------
 
@@ -328,7 +318,7 @@ ALTER TABLE `divisibrands`
 -- AUTO_INCREMENT untuk tabel `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
@@ -340,7 +330,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `user_access_menu`
 --
 ALTER TABLE `user_access_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_header_menu`
