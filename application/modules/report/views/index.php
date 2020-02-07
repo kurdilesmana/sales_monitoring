@@ -85,7 +85,7 @@
                 <?php } ?>
                 </tbody>
               </table>
-              <p align="right" style="padding-right: 10px">Total Sales : <strong>Rp. <?= number_format($sumOmset,2) ?></strong> | Total Qty : <?= number_format($sumQty,2) ?></p>
+              <p align="right" style="padding-right: 10px">Total Sales : <strong>Rp. <?= isset($script)?number_format($sumOmset,2):"0.0"; ?></strong> | Total Qty : <?= isset($script)?number_format($sumQty,2):"0.0" ?></p>
             </div>
             <!-- /.box-body -->
           </div>

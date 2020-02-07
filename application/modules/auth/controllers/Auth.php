@@ -42,6 +42,8 @@ class Auth extends MY_Controller
 						'user_fullname' => $checking['name'],
 						'user_email' => $checking['email'],
 						'user_image' => $checking['image'],
+						'user_brand' => $checking['brand_id'],
+						'user_divisi' => $checking['divisi_id'],
 						'user_role' => $checking['role_id']
 					);
 					//set session userdata

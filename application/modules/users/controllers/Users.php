@@ -91,6 +91,7 @@ class Users extends MY_Controller
 			$this->form_validation->set_rules('name', 'Nama', 'trim|required');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 			$this->form_validation->set_rules('brand_id', 'Brand', 'required');
+			$this->form_validation->set_rules('divisi_id', 'Brand', 'required');
 			$this->form_validation->set_rules('role_id', 'Role', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]');
 			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'trim|matches[password]');
@@ -109,6 +110,7 @@ class Users extends MY_Controller
 				$email = $this->input->post("email", TRUE);
 				$password = $this->input->post("password", TRUE);
 				$brand_id = $this->input->post('brand_id', TRUE);
+				$divisi_id = $this->input->post('divisi_id', TRUE);
 				$role_id = $this->input->post('role_id', TRUE);
 
 				//insert data via model
@@ -118,6 +120,7 @@ class Users extends MY_Controller
 					'email' => $email,
 					'password' => $password,
 					'brand_id' => $brand_id,
+					'divisi_id' => $divisi_id,
 					'role_id' => $role_id,
 				));
 
@@ -138,6 +141,7 @@ class Users extends MY_Controller
 			'name' => $userData->name,
 			'email' => $userData->email,
 			'brand_id' => $userData->brand_id,
+			'divisi_id' => $userData->divisi_id,
 			'role_id' => $userData->role_id
 		);
 

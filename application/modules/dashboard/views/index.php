@@ -19,6 +19,9 @@
 			<!-- /.box-body -->
 		</div>
 		<!-- /.box -->
+		
+		<?= $this->session->userdata('user_brand'); ?>
+		<?= $this->session->userdata('user_divisi'); ?>
 
 		<!-- AREA CHART -->
 		<div class="box box-primary">
