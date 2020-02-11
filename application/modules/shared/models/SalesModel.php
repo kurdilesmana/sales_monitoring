@@ -8,7 +8,7 @@ class SalesModel extends CI_Model
     parent::__construct();
   }
 
-  public function filter($search, $limit, $start, $order_field, $order_ascdesc)
+  public function filter($search, $limit, $start, $order_field, $order_ascdesc, $brand, $divisi)
   {
     $this->db->like('tgl_input', $search); // Untuk menambahkan query where LIKE
     $this->db->order_by($order_field, $order_ascdesc); // Untuk menambahkan query ORDER BY
@@ -24,6 +24,13 @@ class SalesModel extends CI_Model
     $this->db->join('brands', 'brands.id=sales.brand_id', 'left');
     $this->db->join('area', 'area.id=sales.area_id', 'left');
     $this->db->join('divisibrands', 'divisibrands.id=sales.divisi_id', 'left');
+
+    // kondisi untuk selain admin/supervisor
+    if ($divisi != '1' and $brand != '1') {
+      $this->db->where('sales.brand_id', $brand);
+      $this->db->where('sales.divisi_id', $divisi);
+    }
+
     $query = $this->db->get()->result_array();
     return $query; // Eksekusi query sql sesuai kondisi diatas
   }

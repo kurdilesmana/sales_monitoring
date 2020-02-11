@@ -2,13 +2,14 @@
 	$(document).ready(function() {
 		// Set Selected data
 		<?php
-		if (isset($lists['brand_id'])) {
-			$brandID = $lists['brand_id'];
+		$brand = $this->session->userdata('user_brand');
+		if (isset($lists['brand_id']) or $brand) {
+			$brandID = isset($lists['brand_id']) ? $lists['brand_id'] : $brand;
 			$query = "SELECT * FROM brands WHERE id = $brandID";
 			$brand = $this->db->query($query)->result_array(); ?>
 
 			<?php
-				foreach ($brand as $r) { ?>
+			foreach ($brand as $r) { ?>
 				$('#selectBrands').select2({
 					data: [{
 						id: '<?= $r['id'] ?>',
@@ -16,16 +17,33 @@
 					}]
 				});
 			<?php
-				}
 			}
+		}
 
-			if (isset($lists['area_id'])) {
-				$areaID = $lists['area_id'];
-				$query = "SELECT * FROM area WHERE id = $areaID";
-				$area = $this->db->query($query)->result_array(); ?>
+		if (isset($lists['area_id'])) {
+			$areaID = $lists['area_id'];
+			$query = "SELECT * FROM area WHERE id = $areaID";
+			$area = $this->db->query($query)->result_array(); ?>
 
 			<?php foreach ($area as $r) { ?>
 				$('#selectArea').select2({
+					data: [{
+						id: '<?= $r['id'] ?>',
+						text: '<?= $r['name'] ?>'
+					}]
+				});
+			<?php
+			}
+		}
+
+		$divisi = $this->session->userdata('user_divisi');
+		if (isset($lists['divisi_id']) or $divisi) {
+			$divisiID = isset($lists['divisi_id']) ? $lists['divisi_id'] : $divisi;
+			$query = "SELECT * FROM divisibrands WHERE id = $divisiID";
+			$divisi = $this->db->query($query)->result_array(); ?>
+
+			<?php foreach ($divisi as $r) { ?>
+				$('#selectDivisi').select2({
 					data: [{
 						id: '<?= $r['id'] ?>',
 						text: '<?= $r['name'] ?>'

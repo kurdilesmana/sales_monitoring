@@ -32,6 +32,9 @@
           "data": "brand"
         },
         {
+          "data": "divisi"
+        },
+        {
           "render": function(data, type, row) { // Tampilkan role
             var role = ""
             if (row.role_id == 1) { // Jika role 1

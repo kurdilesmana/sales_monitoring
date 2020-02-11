@@ -16,10 +16,12 @@ class UserModel extends CI_Model
     $this->db->limit($limit, $start);
     $this->db->select(
       'COALESCE(brands.name, "undefined") as brand,
+      COALESCE(divisibrands.name, "undefined") as divisi,
       users.*'
     );
     $this->db->from($this->_table);
     $this->db->join('brands', 'brands.id=users.brand_id', 'left');
+    $this->db->join('divisibrands', 'divisibrands.id=users.divisi_id', 'left');
     return $this->db->get()->result_array();
   }
 
@@ -32,9 +34,11 @@ class UserModel extends CI_Model
   {
     $this->db->select(
       'COALESCE(brands.name, "undefined") as brand,
+      COALESCE(divisibrands.name, "undefined") as divisi,
       users.*'
     );
     $this->db->join('brands', 'brands.id=users.brand_id', 'left');
+    $this->db->join('divisibrands', 'divisibrands.id=users.divisi_id', 'left');
     return $this->db->get_where($this->_table, ["email" => $email])->row();
   }
 
@@ -68,6 +72,7 @@ class UserModel extends CI_Model
     $email    = $data["email"];
     $password = $data["password"];
     $brand_id  = $data["brand_id"];
+    $divisi_id  = $data["divisi_id"];
     $role_id  = $data["role_id"];
 
     $thisUserPass = $this->__getUserPassword(array('id' => $id));
@@ -81,9 +86,13 @@ class UserModel extends CI_Model
     }
 
     if ($password) {
-      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', brand_id = '" . $this->db->escape_str($brand_id) . "', role_id = '" . $this->db->escape_str($role_id) . "', password = '" . $this->db->escape_str(password_hash(($password), PASSWORD_DEFAULT)) . "'";
+      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', 
+        brand_id = '" . $this->db->escape_str($brand_id) . "', divisi_id = '" . $this->db->escape_str($divisi_id) . "', 
+        role_id = '" . $this->db->escape_str($role_id) . "', password = '" . $this->db->escape_str(password_hash(($password), PASSWORD_DEFAULT)) . "'";
     } else {
-      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', brand_id = '" . $this->db->escape_str($brand_id) . "',role_id = '" . $this->db->escape_str($role_id) . "'";
+      $sql_user = "name = '" . $this->db->escape_str($name) . "', email = '" . $this->db->escape_str($email) . "', 
+        brand_id = '" . $this->db->escape_str($brand_id) . "', divisi_id = '" . $this->db->escape_str($divisi_id) . "',
+        role_id = '" . $this->db->escape_str($role_id) . "'";
     }
 
     $doUpdate = $this->db->query("

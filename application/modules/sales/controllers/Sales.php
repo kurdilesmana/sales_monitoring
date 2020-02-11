@@ -142,6 +142,7 @@ class Sales extends MY_Controller
 			'id_sales' => $salesData->id,
 			'tgl_input' => date('d/m/Y', strtotime($salesData->tgl_input)),
 			'brand_id' => $salesData->brand_id,
+			'divisi_id' => $salesData->divisi_id,
 			'area_id' => $salesData->area_id,
 			'omset' => $salesData->omset,
 			'quantity' => $salesData->quantity,
@@ -172,6 +173,8 @@ class Sales extends MY_Controller
 
 	function view()
 	{
+		$divisi = $this->session->userdata('user_divisi');
+		$brand = $this->session->userdata('user_brand');
 		$search = $_POST['search']['value']; // Ambil data yang di ketik user pada textbox pencarian
 		$limit = $_POST['length']; // Ambil data limit per page
 		$start = $_POST['start']; // Ambil data start
@@ -179,7 +182,7 @@ class Sales extends MY_Controller
 		$order_field = $_POST['columns'][$order_index]['data']; // Untuk mengambil nama field yg menjadi acuan untuk sorting
 		$order_ascdesc = $_POST['order'][0]['dir']; // Untuk menentukan order by "ASC" atau "DESC"
 		$sql_total = $this->SalesModel->count_all(); // Panggil fungsi count_all pada UserModel
-		$sql_data = $this->SalesModel->filter($search, $limit, $start, $order_field, $order_ascdesc); // Panggil fungsi filter pada UserModel
+		$sql_data = $this->SalesModel->filter($search, $limit, $start, $order_field, $order_ascdesc, $brand, $divisi); // Panggil fungsi filter pada UserModel
 		$sql_filter = $this->SalesModel->count_filter($search); // Panggil fungsi count_filter pada UserModel
 		$callback = array(
 			'draw' => $_POST['draw'], // Ini dari datatablenya

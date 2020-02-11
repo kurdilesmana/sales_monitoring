@@ -37,7 +37,8 @@
           <div class="form-group <?= form_error('brand_id') ? 'has-error' : '' ?>">
             <label for="brand_id" class="col-sm-3 control-label">Brand</label>
             <div class="col-sm-6">
-              <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true"
+              <?= $this->session->userdata('user_brand') != '1' ? 'disabled' : ''; ?> >
               </select>
             </div>
             <span class="help-block"><?php echo form_error('brand_id'); ?></span>
@@ -45,7 +46,8 @@
           <div class="form-group <?= form_error('divisi_id') ? 'has-error' : '' ?>">
             <label for="divisi_id" class="col-sm-3 control-label">Divisi</label>
             <div class="col-sm-6">
-              <select id="selectDivisi" class="form-control select2 select2-hidden-accessible" name="divisi_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+              <select id="selectDivisi" class="form-control select2 select2-hidden-accessible" name="divisi_id" style="width: 100%;" tabindex="-1" aria-hidden="true"
+              <?= $this->session->userdata('user_divisi') != '1' ? 'disabled' : ''; ?> >
               </select>
             </div>
             <span class="help-block"><?php echo form_error('divisi_id'); ?></span>

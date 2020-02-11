@@ -19,24 +19,6 @@
 		}
 		?>
 
-		<?php
-		if (isset($lists['brand_id'])) {
-			$brandID = $lists['brand_id'];
-			$query = "SELECT * FROM brands WHERE id = $brandID";
-			$brand = $this->db->query($query)->result_array(); ?>
-
-			<?php foreach ($brand as $r) { ?>
-				$('#selectBrands').select2({
-					data: [{
-						id: '<?= $r['id'] ?>',
-						text: '<?= $r['name'] ?>'
-					}]
-				});
-		<?php
-			}
-		}
-		?>
-
 		$('#selectRole').select2({
 			placeholder: 'Pilih Role',
 			ajax: {
@@ -55,6 +37,25 @@
 				},
 			}
 		});
+
+		<?php
+		if (isset($lists['brand_id'])) {
+			$brandID = $lists['brand_id'];
+			$query = "SELECT * FROM brands WHERE id = $brandID";
+			$brand = $this->db->query($query)->result_array(); ?>
+
+			<?php foreach ($brand as $r) { ?>
+				$('#selectBrands').select2({
+					data: [{
+						id: '<?= $r['id'] ?>',
+						text: '<?= $r['name'] ?>'
+					}]
+				});
+		<?php
+			}
+		}
+		?>
+
 		$('#selectBrands').select2({
 			placeholder: 'Pilih Brands',
 			ajax: {
@@ -73,6 +74,25 @@
 				},
 			}
 		});
+
+		<?php
+		if (isset($lists['divisi_id'])) {
+			$divisiID = $lists['divisi_id'];
+			$query = "SELECT * FROM divisibrands WHERE id = $divisiID";
+			$brand = $this->db->query($query)->result_array(); ?>
+
+			<?php foreach ($brand as $r) { ?>
+				$('#selectDivisi').select2({
+					data: [{
+						id: '<?= $r['id'] ?>',
+						text: '<?= $r['name'] ?>'
+					}]
+				});
+		<?php
+			}
+		}
+		?>
+
 		$('#selectDivisi').select2({
 			placeholder: 'Pilih Divisi',
 			ajax: {

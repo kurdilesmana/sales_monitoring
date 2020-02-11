@@ -68,7 +68,7 @@
                 <tbody>
                   <?php if (isset($lists)) {
                     $sumOmset = 0;
-                    $sumQty = 0; 
+                    $sumQty = 0;
                     foreach ($lists as $l) { ?>
                       <tr>
                         <td><?= $l['tgl'] ?></td>
@@ -77,15 +77,17 @@
                         <td><?= $l['area'] ?></td>
                         <td><?= $l['omset'] ?></td>
                         <td><?= $l['quantity'] ?></td>
-                      </tr>                      
-                    <?php 
-                      $sumOmset += $l['omset']; 
-                      $sumQty += $l['quantity']; 
+                      </tr>
+                    <?php
+                      $sumOmset += $l['omset'];
+                      $sumQty += $l['quantity'];
                     } ?>
-                <?php } ?>
+                  <?php } ?>
                 </tbody>
               </table>
-              <p align="right" style="padding-right: 10px">Total Sales : <strong>Rp. <?= isset($script)?number_format($sumOmset,2):"0.0"; ?></strong> | Total Qty : <?= isset($script)?number_format($sumQty,2):"0.0" ?></p>
+              <p align="right" style="padding-right: 10px">
+                Total Sales : <strong>Rp. <?= isset($sumOmset) ? number_format($sumOmset, 2) : "0.0"; ?></strong> | Total Qty : <?= isset($sumQty) ? number_format($sumQty, 2) : "0.0" ?>
+              </p>
             </div>
             <!-- /.box-body -->
           </div>

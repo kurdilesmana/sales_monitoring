@@ -57,6 +57,12 @@
               </div>
             </div>
             <div class="form-group">
+              <label for="inputEmail" class="col-sm-2 control-label">Divisi</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputEmail" placeholder="Email" value="<?php echo isset($lists) ? $lists['divisi'] : set_value('divisi'); ?>" readonly>
+              </div>
+            </div>
+            <div class="form-group">
               <label for="inputName" class="col-sm-2 control-label">Date Created</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="inputName" placeholder="Name" value="<?php echo isset($lists) ? $lists['date_created'] : set_value('date_created'); ?>" readonly>

@@ -91,7 +91,7 @@ class Users extends MY_Controller
 			$this->form_validation->set_rules('name', 'Nama', 'trim|required');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 			$this->form_validation->set_rules('brand_id', 'Brand', 'required');
-			$this->form_validation->set_rules('divisi_id', 'Brand', 'required');
+			$this->form_validation->set_rules('divisi_id', 'Divisi', 'required');
 			$this->form_validation->set_rules('role_id', 'Role', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|min_length[5]');
 			$this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'trim|matches[password]');
@@ -128,7 +128,7 @@ class Users extends MY_Controller
 				if ($doUpdate == 'exist') {
 					$tdata['error'] = 'Email sudah terdaftar!';
 				} else {
-					$this->session->set_flashdata('success', 'Berhasil diubah');
+					$this->session->set_flashdata('success', 'Be`rhasil diubah');
 					redirect(base_url() . 'users');
 				}
 			}
@@ -204,6 +204,7 @@ class Users extends MY_Controller
 			'name' => $userData->name,
 			'email' => $userData->email,
 			'brand' => $userData->brand,
+			'divisi' => $userData->divisi,
 			'date_created' => $userData->date_created
 		);
 
