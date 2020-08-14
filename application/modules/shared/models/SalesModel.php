@@ -26,9 +26,13 @@ class SalesModel extends CI_Model
     $this->db->join('divisibrands', 'divisibrands.id=sales.divisi_id', 'left');
 
     // kondisi untuk selain admin/supervisor
-    if ($divisi != '1' and $brand != '1') {
-      $this->db->where('sales.brand_id', $brand);
+    if ($divisi != '1') {
       $this->db->where('sales.divisi_id', $divisi);
+    }
+
+    // kondisi untuk selain admin/supervisor
+    if ($brand != '1') {
+      $this->db->where('sales.brand_id', $brand);
     }
 
     $query = $this->db->get()->result_array();
@@ -136,10 +140,10 @@ class SalesModel extends CI_Model
     if ($tgl_akhir != '') {
       $this->db->where("sales.tgl_input <= str_to_date('$tgl_akhir', '%d/%m/%Y')");
     }
-    if ($brand_id != "") {
+    if ($brand_id != "1") {
       $this->db->where("sales.brand_id = $brand_id");
     }
-    if ($divisi_id != "") {
+    if ($divisi_id != "1") {
       $this->db->where("sales.divisi_id = $divisi_id");
     }
     if ($area_id != "") {

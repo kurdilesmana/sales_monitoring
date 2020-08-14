@@ -128,7 +128,7 @@ class Users extends MY_Controller
 				if ($doUpdate == 'exist') {
 					$tdata['error'] = 'Email sudah terdaftar!';
 				} else {
-					$this->session->set_flashdata('success', 'Be`rhasil diubah');
+					$this->session->set_flashdata('success', 'Berhasil diubah');
 					redirect(base_url() . 'users');
 				}
 			}

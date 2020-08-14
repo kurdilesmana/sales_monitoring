@@ -8,7 +8,7 @@
       //   [5],
       //   [5]
       // ],
-      'searching': false,
+      'searching': true,
       'info': true,
       'autoWidth': false,
       "processing": true,
@@ -36,6 +36,7 @@
         }, {
           "data": "quantity"
         },
+        <?php if (in_array($this->session->userdata('user_role'),  [1, 3])) { ?>
         {
           sWidth: "17%",
           "render": function(data, type, row) { // Tampilkan kolom aksi
@@ -44,6 +45,7 @@
             return html
           }
         },
+        <?php } ?>
       ],
     });
     $('#myTable').on('click', 'tbody .edit_btn', function() {

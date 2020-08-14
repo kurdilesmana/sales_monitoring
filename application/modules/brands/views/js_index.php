@@ -8,7 +8,7 @@
         [5],
         [5]
       ],
-      'searching': false,
+      'searching': true,
       'info': true,
       'autoWidth': false,
       "processing": true,

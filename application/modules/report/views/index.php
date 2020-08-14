@@ -31,12 +31,12 @@
                   </div>
                 </div>
                 <div class="form-group col-md-12">
-                  <div class="col-md-4">
+                  <div id="brand" class="col-md-4">
                     <label for="brand_id" class="control-label">Brands</label>
                     <select id="selectBrands" class="form-control select2 select2-hidden-accessible" name="brand_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                     </select>
                   </div>
-                  <div class="col-md-4">
+                  <div id="divisi" class="col-md-4">
                     <label for="divisi_id" class="control-label">Divisi</label>
                     <select id="selectDivisi" class="form-control select2 select2-hidden-accessible" name="divisi_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                     </select>

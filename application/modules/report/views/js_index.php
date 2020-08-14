@@ -23,8 +23,12 @@
 
     // set select2 option
     <?php
-    $brandID = set_value('brand_id');
-    if ($brandID) {
+    // $brandID = set_value('brand_id');
+    $brandID = $this->session->userdata('user_brand'); ?>
+    if ("<?= $brandID ?>" != "1") {
+      $('#brand').hide()
+    }
+    <?php if ($brandID) {
       $query = "SELECT * FROM brands WHERE id = $brandID";
       $brand = $this->db->query($query)->result_array();
       
@@ -39,8 +43,12 @@
       }
     }   
 
-    $divisiID = set_value('divisi_id');
-    if ($divisiID) {
+    // $divisiID = set_value('divisi_id');
+    $divisiID = $this->session->userdata('user_divisi'); ?>
+    if ("<?= $divisiID ?>" != "1") {
+      $('#divisi').hide()
+    }
+    <?php if ($divisiID) {
       $query = "SELECT * FROM divisibrands WHERE id = $divisiID";
       $divisi = $this->db->query($query)->result_array();
     

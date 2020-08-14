@@ -1,19 +1,23 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		// Set Selected data
-		<?php
-		$brand = $this->session->userdata('user_brand');
-		if (isset($lists['brand_id']) or $brand) {
+		<?php $brand = $this->session->userdata('user_brand'); ?>
+
+		if ("<?= $brand ?>" != "1") {
+			$('#brand').hide()
+		}
+
+		<?php if (isset($lists['brand_id']) or $brand) {
 			$brandID = isset($lists['brand_id']) ? $lists['brand_id'] : $brand;
 			$query = "SELECT * FROM brands WHERE id = $brandID";
 			$brand = $this->db->query($query)->result_array(); ?>
-
+			
 			<?php
 			foreach ($brand as $r) { ?>
-				$('#selectBrands').select2({
+				$('#brand_id').select2({
 					data: [{
-						id: '<?= $r['id'] ?>',
-						text: '<?= $r['name'] ?>'
+						id: "<?= $r['id'] ?>",
+						text: "<?= $r['name'] ?>"
 					}]
 				});
 			<?php
@@ -36,14 +40,19 @@
 			}
 		}
 
-		$divisi = $this->session->userdata('user_divisi');
-		if (isset($lists['divisi_id']) or $divisi) {
+		$divisi = $this->session->userdata('user_divisi'); ?>
+
+		if ("<?= $divisi ?>" != "1") {
+			$('#divisi').hide()
+		}
+
+		<?php if (isset($lists['divisi_id']) or $divisi) {
 			$divisiID = isset($lists['divisi_id']) ? $lists['divisi_id'] : $divisi;
 			$query = "SELECT * FROM divisibrands WHERE id = $divisiID";
 			$divisi = $this->db->query($query)->result_array(); ?>
 
 			<?php foreach ($divisi as $r) { ?>
-				$('#selectDivisi').select2({
+				$('#divisi_id').select2({
 					data: [{
 						id: '<?= $r['id'] ?>',
 						text: '<?= $r['name'] ?>'
@@ -54,7 +63,7 @@
 		}
 		?>
 
-		$('#selectBrands').select2({
+		$('#brand_id').select2({
 			placeholder: 'Pilih Brands',
 			ajax: {
 				dataType: 'json',
@@ -72,7 +81,7 @@
 				},
 			}
 		});
-		$('#selectDivisi').select2({
+		$('#divisi_id').select2({
 			placeholder: 'Pilih Divisi',
 			ajax: {
 				dataType: 'json',
